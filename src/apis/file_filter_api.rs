@@ -33,7 +33,7 @@ pub trait FileFilterApi {
     fn get_file_filter_settings(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::FileFilterSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::FileFilterSettings, Error>>>;
     fn update_file_filter_settings(
         &self,
         file_filter_settings: crate::models::FileFilterSettingsExtended,
@@ -45,7 +45,7 @@ impl<C: hyper::client::connect::Connect + 'static> FileFilterApi for FileFilterA
     fn get_file_filter_settings(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::FileFilterSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::FileFilterSettings, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();

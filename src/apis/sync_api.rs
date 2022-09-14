@@ -33,19 +33,19 @@ pub trait SyncApi {
     fn create_sync_job(
         &self,
         sync_job: crate::models::SyncJobCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn create_sync_policy(
         &self,
         sync_policy: crate::models::SyncPolicyCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn create_sync_reports_rotate_item(
         &self,
         sync_reports_rotate_item: crate::models::Empty,
-    ) -> Box<dyn Future<Item = crate::models::CreateSyncReportsRotateItemResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateSyncReportsRotateItemResponse, Error>>>;
     fn create_sync_rule(
         &self,
         sync_rule: crate::models::SyncRuleCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn delete_sync_policies(
         &self,
         local_only: bool,
@@ -68,37 +68,37 @@ pub trait SyncApi {
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>>;
     fn get_history_file(
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>>;
     fn get_history_network(
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>>;
     fn get_history_worker(
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>>;
     fn get_sync_job(
         &self,
         sync_job_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncJobs, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncJobs, Error>>>;
     fn get_sync_license(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::LicenseLicense, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::LicenseLicense, Error>>>;
     fn get_sync_policy(
         &self,
         sync_policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncPolicies, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncPolicies, Error>>>;
     fn get_sync_report(
         &self,
         sync_report_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncReports, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncReports, Error>>>;
     fn get_sync_reports(
         &self,
         sort: &str,
@@ -109,14 +109,14 @@ pub trait SyncApi {
         limit: i32,
         reports_per_policy: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncReportsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncReportsExtended, Error>>>;
     fn get_sync_rule(
         &self,
         sync_rule_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncRules, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncRules, Error>>>;
     fn get_sync_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SyncSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncSettings, Error>>>;
     fn get_target_policies(
         &self,
         sort: &str,
@@ -124,15 +124,15 @@ pub trait SyncApi {
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetPoliciesExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetPoliciesExtended, Error>>>;
     fn get_target_policy(
         &self,
         target_policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetPolicies, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetPolicies, Error>>>;
     fn get_target_report(
         &self,
         target_report_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetReports, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetReports, Error>>>;
     fn get_target_reports(
         &self,
         sort: &str,
@@ -143,7 +143,7 @@ pub trait SyncApi {
         limit: i32,
         reports_per_policy: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetReportsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetReportsExtended, Error>>>;
     fn list_sync_jobs(
         &self,
         sort: &str,
@@ -151,7 +151,7 @@ pub trait SyncApi {
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncJobsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncJobsExtended, Error>>>;
     fn list_sync_policies(
         &self,
         sort: &str,
@@ -160,10 +160,10 @@ pub trait SyncApi {
         limit: i32,
         scope: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncPoliciesExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result< crate::models::SyncPoliciesExtended, Error>>>;
     fn list_sync_reports_rotate(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SyncReportsRotate, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncReportsRotate, Error>>>;
     fn list_sync_rules(
         &self,
         sort: &str,
@@ -171,7 +171,7 @@ pub trait SyncApi {
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncRulesExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncRulesExtended, Error>>>;
     fn update_sync_job(
         &self,
         sync_job: crate::models::SyncJob,
@@ -197,7 +197,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn create_sync_job(
         &self,
         sync_job: crate::models::SyncJobCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let uri_str = format!("{}/platform/3/sync/jobs", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -210,7 +210,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn create_sync_policy(
         &self,
         sync_policy: crate::models::SyncPolicyCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let uri_str = format!("{}/platform/3/sync/policies", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -223,7 +223,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn create_sync_reports_rotate_item(
         &self,
         sync_reports_rotate_item: crate::models::Empty,
-    ) -> Box<dyn Future<Item = crate::models::CreateSyncReportsRotateItemResponse, Error = Error>>
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateSyncReportsRotateItemResponse, Error>>>
     {
         let uri_str = format!(
             "{}/platform/1/sync/reports-rotate",
@@ -240,7 +240,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn create_sync_rule(
         &self,
         sync_rule: crate::models::SyncRuleCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let uri_str = format!("{}/platform/3/sync/rules", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -351,7 +351,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("begin", &begin.to_string())
             .append_pair("end", &end.to_string())
@@ -372,7 +372,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("begin", &begin.to_string())
             .append_pair("end", &end.to_string())
@@ -393,7 +393,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("begin", &begin.to_string())
             .append_pair("end", &end.to_string())
@@ -414,7 +414,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         begin: i32,
         end: i32,
-    ) -> Box<dyn Future<Item = crate::models::HistoryFile, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HistoryFile, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("begin", &begin.to_string())
             .append_pair("end", &end.to_string())
@@ -434,7 +434,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn get_sync_job(
         &self,
         sync_job_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncJobs, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncJobs, Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/jobs/{SyncJobId}",
             self.configuration.base_path,
@@ -450,7 +450,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
 
     fn get_sync_license(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::LicenseLicense, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::LicenseLicense, Error>>> {
         let uri_str = format!("{}/platform/5/sync/license", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -463,7 +463,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn get_sync_policy(
         &self,
         sync_policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncPolicies, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncPolicies, Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/policies/{SyncPolicyId}",
             self.configuration.base_path,
@@ -480,7 +480,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn get_sync_report(
         &self,
         sync_report_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncReports, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncReports, Error>>> {
         let uri_str = format!(
             "{}/platform/4/sync/reports/{SyncReportId}",
             self.configuration.base_path,
@@ -504,7 +504,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         reports_per_policy: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncReportsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncReportsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())
@@ -530,7 +530,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn get_sync_rule(
         &self,
         sync_rule_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncRules, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncRules, Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/rules/{SyncRuleId}",
             self.configuration.base_path,
@@ -546,7 +546,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
 
     fn get_sync_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SyncSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncSettings, Error>>> {
         let uri_str = format!("{}/platform/3/sync/settings", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -563,7 +563,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetPoliciesExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetPoliciesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("target_path", &target_path.to_string())
@@ -586,7 +586,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn get_target_policy(
         &self,
         target_policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetPolicies, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetPolicies, Error>>> {
         let uri_str = format!(
             "{}/platform/1/sync/target/policies/{TargetPolicyId}",
             self.configuration.base_path,
@@ -603,7 +603,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn get_target_report(
         &self,
         target_report_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetReports, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetReports, Error>>> {
         let uri_str = format!(
             "{}/platform/4/sync/target/reports/{TargetReportId}",
             self.configuration.base_path,
@@ -627,7 +627,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         reports_per_policy: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::TargetReportsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::TargetReportsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())
@@ -657,7 +657,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncJobsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncJobsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("state", &state.to_string())
@@ -685,7 +685,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         scope: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncPoliciesExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result< crate::models::SyncPoliciesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())
@@ -708,7 +708,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
 
     fn list_sync_reports_rotate(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SyncReportsRotate, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncReportsRotate, Error>>> {
         let uri_str = format!(
             "{}/platform/1/sync/reports-rotate",
             self.configuration.base_path
@@ -728,7 +728,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SyncRulesExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncRulesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("type", &_type.to_string())

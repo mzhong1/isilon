@@ -32,10 +32,10 @@ impl<C: hyper::client::connect::Connect> FilesystemApiClient<C> {
 pub trait FilesystemApi {
     fn get_settings_access_time(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SettingsAccessTime, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SettingsAccessTime, Error>>>;
     fn get_settings_character_encodings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SettingsCharacterEncodings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SettingsCharacterEncodings, Error>>>;
     fn update_settings_access_time(
         &self,
         settings_access_time: crate::models::SettingsAccessTimeExtended,
@@ -49,7 +49,7 @@ pub trait FilesystemApi {
 impl<C: hyper::client::connect::Connect + 'static> FilesystemApi for FilesystemApiClient<C> {
     fn get_settings_access_time(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SettingsAccessTime, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SettingsAccessTime, Error>>> {
         let uri_str = format!(
             "{}/platform/1/filesystem/settings/access-time",
             self.configuration.base_path
@@ -64,7 +64,7 @@ impl<C: hyper::client::connect::Connect + 'static> FilesystemApi for FilesystemA
 
     fn get_settings_character_encodings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SettingsCharacterEncodings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SettingsCharacterEncodings, Error>>> {
         let uri_str = format!(
             "{}/platform/1/filesystem/settings/character-encodings",
             self.configuration.base_path

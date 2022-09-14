@@ -33,11 +33,11 @@ pub trait ZonesApi {
     fn create_zone(
         &self,
         zone: crate::models::ZoneCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn delete_zone(&self, zone_id: i32) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_zone(&self, zone_id: i32)
-        -> Box<dyn Future<Item = crate::models::Zones, Error = Error>>;
-    fn list_zones(&self) -> Box<dyn Future<Item = crate::models::ZonesExtended, Error = Error>>;
+        -> Box<dyn Future<Output = Result<crate::models::Zones, Error>>>;
+    fn list_zones(&self) -> Box<dyn Future<Output = Result<crate::models::ZonesExtended, Error>>>;
     fn update_zone(
         &self,
         zone: crate::models::Zone,
@@ -49,7 +49,7 @@ impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C
     fn create_zone(
         &self,
         zone: crate::models::ZoneCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let uri_str = format!("{}/platform/3/zones", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -76,7 +76,7 @@ impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C
     fn get_zone(
         &self,
         zone_id: i32,
-    ) -> Box<dyn Future<Item = crate::models::Zones, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Zones, Error>>> {
         let uri_str = format!(
             "{}/platform/3/zones/{ZoneId}",
             self.configuration.base_path,
@@ -90,7 +90,7 @@ impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C
         )
     }
 
-    fn list_zones(&self) -> Box<dyn Future<Item = crate::models::ZonesExtended, Error = Error>> {
+    fn list_zones(&self) -> Box<dyn Future<Output = Result<crate::models::ZonesExtended, Error>>> {
         let uri_str = format!("{}/platform/3/zones", self.configuration.base_path);
         query(
             self.configuration.borrow(),

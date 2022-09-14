@@ -34,30 +34,30 @@ pub trait ProtocolsApi {
         &self,
         hdfs_proxyuser: crate::models::HdfsProxyuserCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn create_hdfs_rack(
         &self,
         hdfs_rack: crate::models::HdfsRackCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn create_ndmp_settings_preferred_ip(
         &self,
         ndmp_settings_preferred_ip: crate::models::NdmpSettingsPreferredIpCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_ndmp_settings_variable(
         &self,
         ndmp_settings_variable: crate::models::NdmpSettingsVariableCreateParams,
         ndmp_settings_variable_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_ndmp_user(
         &self,
         ndmp_user: crate::models::NdmpUserCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_nfs_alias(
         &self,
         nfs_alias: crate::models::NfsAliasCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateNfsAliasResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateNfsAliasResponse, Error>>>;
     fn create_nfs_export(
         &self,
         nfs_export: crate::models::NfsExportCreateParams,
@@ -67,46 +67,46 @@ pub trait ProtocolsApi {
         ignore_conflicts: bool,
         ignore_bad_paths: bool,
         ignore_bad_auth: bool,
-    ) -> Box<dyn Future<Item = crate::models::CreateQuotaReportResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateQuotaReportResponse, Error>>>;
     fn create_nfs_netgroup_check_item(
         &self,
         nfs_netgroup_check_item: crate::models::Empty,
         host: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_nfs_netgroup_flush_item(
         &self,
         nfs_netgroup_flush_item: crate::models::Empty,
         host: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_nfs_nlm_sessions_check_item(
         &self,
         nfs_nlm_sessions_check_item: crate::models::Empty,
         cluster_ip: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateNfsNlmSessionsCheckItemResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateNfsNlmSessionsCheckItemResponse, Error>>>;
     fn create_nfs_reload_item(
         &self,
         nfs_reload_item: crate::models::Empty,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_ntp_server(
         &self,
         ntp_server: crate::models::NtpServerCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_smb_log_level_filter(
         &self,
         smb_log_level_filter: crate::models::SmbLogLevelFilter,
-    ) -> Box<dyn Future<Item = crate::models::CreateAuthRefreshItemResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateAuthRefreshItemResponse, Error>>>;
     fn create_smb_share(
         &self,
         smb_share: crate::models::SmbShareCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn create_swift_account(
         &self,
         swift_account: crate::models::SwiftAccount,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn delete_hdfs_proxyuser(
         &self,
         hdfs_proxyuser_id: &str,
@@ -199,61 +199,61 @@ pub trait ProtocolsApi {
         zone: &str,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_ftp_settings(&self)
-        -> Box<dyn Future<Item = crate::models::FtpSettings, Error = Error>>;
+        -> Box<dyn Future<Output = Result<crate::models::FtpSettings, Error>>>;
     fn get_hdfs_log_level(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::HdfsLogLevel, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsLogLevel, Error>>>;
     fn get_hdfs_proxyuser(
         &self,
         hdfs_proxyuser_id: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsProxyusers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsProxyusers, Error>>>;
     fn get_hdfs_rack(
         &self,
         hdfs_rack_id: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsRacks, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsRacks, Error>>>;
     fn get_hdfs_ranger_plugin_settings(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsRangerPluginSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsRangerPluginSettings, Error>>>;
     fn get_hdfs_settings(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsSettings, Error>>>;
     fn get_http_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::HttpSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HttpSettings, Error>>>;
     fn get_ndmp_contexts_backup(
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackupExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackupExtended, Error>>>;
     fn get_ndmp_contexts_backup_by_id(
         &self,
         ndmp_contexts_backup_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackup, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackup, Error>>>;
     fn get_ndmp_contexts_bre(
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBreExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBreExtended, Error>>>;
     fn get_ndmp_contexts_bre_by_id(
         &self,
         ndmp_contexts_bre_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBre, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBre, Error>>>;
     fn get_ndmp_contexts_restore(
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackupExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackupExtended, Error>>>;
     fn get_ndmp_contexts_restore_by_id(
         &self,
         ndmp_contexts_restore_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackup, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackup, Error>>>;
     fn get_ndmp_diagnostics(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpDiagnostics, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpDiagnostics, Error>>>;
     fn get_ndmp_dumpdate(
         &self,
         ndmp_dumpdate_id: &str,
@@ -263,18 +263,18 @@ pub trait ProtocolsApi {
         limit: i32,
         path: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpDumpdates, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpDumpdates, Error>>>;
     fn get_ndmp_logs(
         &self,
         lnn: &str,
         page: i32,
         pagesize: i32,
-    ) -> Box<dyn Future<Item = crate::models::NdmpLogs, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpLogs, Error>>>;
     fn get_ndmp_session(
         &self,
         ndmp_session_id: &str,
         lnn: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSessions, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSessions, Error>>>;
     fn get_ndmp_sessions(
         &self,
         consolidate: bool,
@@ -282,59 +282,59 @@ pub trait ProtocolsApi {
         session: &str,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSessionsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSessionsExtended, Error>>>;
     fn get_ndmp_settings_dmas(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsDmas, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsDmas, Error>>>;
     fn get_ndmp_settings_global(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsGlobal, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsGlobal, Error>>>;
     fn get_ndmp_settings_preferred_ip(
         &self,
         ndmp_settings_preferred_ip_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsPreferredIps, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsPreferredIps, Error>>>;
     fn get_ndmp_settings_variable(
         &self,
         ndmp_settings_variable_id: &str,
         path: &str,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsVariables, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsVariables, Error>>>;
     fn get_ndmp_user(
         &self,
         ndmp_user_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpUsers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpUsers, Error>>>;
     fn get_nfs_alias(
         &self,
         nfs_alias_id: &str,
         scope: &str,
         check: bool,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsAliases, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsAliases, Error>>>;
     fn get_nfs_check(
         &self,
         ignore_bad_paths: bool,
         ignore_bad_auth: bool,
         zone: &str,
         ignore_unresolvable_hosts: bool,
-    ) -> Box<dyn Future<Item = crate::models::NfsCheckExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsCheckExtended, Error>>>;
     fn get_nfs_export(
         &self,
         nfs_export_id: &str,
         scope: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsExports, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsExports, Error>>>;
     fn get_nfs_exports_summary(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsExportsSummary, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsExportsSummary, Error>>>;
     fn get_nfs_log_level(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NfsLogLevel, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsLogLevel, Error>>>;
     fn get_nfs_netgroup(
         &self,
         host: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNetgroup, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNetgroup, Error>>>;
     fn get_nfs_nlm_locks(
         &self,
         sort: &str,
@@ -346,13 +346,13 @@ pub trait ProtocolsApi {
         client_id: &str,
         path: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmLocks, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmLocks, Error>>>;
     fn get_nfs_nlm_session(
         &self,
         nfs_nlm_session_id: &str,
         cluster_ip: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmSessions, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmSessions, Error>>>;
     fn get_nfs_nlm_sessions(
         &self,
         sort: &str,
@@ -360,98 +360,98 @@ pub trait ProtocolsApi {
         limit: i32,
         zone: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmSessionsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmSessionsExtended, Error>>>;
     fn get_nfs_nlm_waiters(
         &self,
         sort: &str,
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmWaiters, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmWaiters, Error>>>;
     fn get_nfs_settings_export(
         &self,
         scope: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsSettingsExport, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsSettingsExport, Error>>>;
     fn get_nfs_settings_global(
         &self,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsSettingsGlobal, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsSettingsGlobal, Error>>>;
     fn get_nfs_settings_zone(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsSettingsZone, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsSettingsZone, Error>>>;
     fn get_ntp_server(
         &self,
         ntp_server_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NtpServers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NtpServers, Error>>>;
     fn get_ntp_settings(&self)
-        -> Box<dyn Future<Item = crate::models::NtpSettings, Error = Error>>;
+        -> Box<dyn Future<Output = Result<crate::models::NtpSettings, Error>>>;
     fn get_smb_log_level(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SmbLogLevel, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevel, Error>>>;
     fn get_smb_log_level_filter(
         &self,
         smb_log_level_filter_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbLogLevelFilters, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevelFilters, Error>>>;
     fn get_smb_openfiles(
         &self,
         sort: &str,
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbOpenfiles, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbOpenfiles, Error>>>;
     fn get_smb_sessions(
         &self,
         sort: &str,
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSessions, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSessions, Error>>>;
     fn get_smb_settings_global(
         &self,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSettingsGlobal, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSettingsGlobal, Error>>>;
     fn get_smb_settings_share(
         &self,
         scope: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSettingsShare, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSettingsShare, Error>>>;
     fn get_smb_share(
         &self,
         smb_share_id: &str,
         scope: &str,
         resolve_names: bool,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbShares, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbShares, Error>>>;
     fn get_smb_shares_summary(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSharesSummary, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSharesSummary, Error>>>;
     fn get_snmp_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SnmpSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SnmpSettings, Error>>>;
     fn get_swift_account(
         &self,
         swift_account_id: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SwiftAccounts, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SwiftAccounts, Error>>>;
     fn list_hdfs_proxyusers(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsProxyusers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsProxyusers, Error>>>;
     fn list_hdfs_racks(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsRacksExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsRacksExtended, Error>>>;
     fn list_ndmp_settings_preferred_ips(
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsPreferredIps, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsPreferredIps, Error>>>;
     fn list_ndmp_users(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpUsersExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpUsersExtended, Error>>>;
     fn list_nfs_aliases(
         &self,
         sort: &str,
@@ -460,7 +460,7 @@ pub trait ProtocolsApi {
         limit: i32,
         check: bool,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsAliasesExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsAliasesExtended, Error>>>;
     fn list_nfs_exports(
         &self,
         sort: &str,
@@ -472,20 +472,20 @@ pub trait ProtocolsApi {
         path: &str,
         check: bool,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsExportsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsExportsExtended, Error>>>;
     fn list_ntp_servers(
         &self,
         sort: &str,
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NtpServersExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NtpServersExtended, Error>>>;
     fn list_smb_log_level_filters(
         &self,
         sort: &str,
         dir: &str,
         level: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbLogLevelFilters, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevelFilters, Error>>>;
     fn list_smb_shares(
         &self,
         sort: &str,
@@ -496,11 +496,11 @@ pub trait ProtocolsApi {
         offset: i32,
         scope: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSharesExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSharesExtended, Error>>>;
     fn list_swift_accounts(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SwiftAccountsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SwiftAccountsExtended, Error>>>;
     fn update_ftp_settings(
         &self,
         ftp_settings: crate::models::FtpSettingsExtended,
@@ -645,7 +645,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         hdfs_proxyuser: crate::models::HdfsProxyuserCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -666,7 +666,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         hdfs_rack: crate::models::HdfsRackCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -686,7 +686,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn create_ndmp_settings_preferred_ip(
         &self,
         ndmp_settings_preferred_ip: crate::models::NdmpSettingsPreferredIpCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/4/protocols/ndmp/settings/preferred-ips",
             self.configuration.base_path
@@ -704,7 +704,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         ndmp_settings_variable: crate::models::NdmpSettingsVariableCreateParams,
         ndmp_settings_variable_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/settings/variables/{NdmpSettingsVariableId}",
             self.configuration.base_path,
@@ -722,7 +722,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn create_ndmp_user(
         &self,
         ndmp_user: crate::models::NdmpUserCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/users",
             self.configuration.base_path
@@ -740,7 +740,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         nfs_alias: crate::models::NfsAliasCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateNfsAliasResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateNfsAliasResponse, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -766,7 +766,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         ignore_conflicts: bool,
         ignore_bad_paths: bool,
         ignore_bad_auth: bool,
-    ) -> Box<dyn Future<Item = crate::models::CreateQuotaReportResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateQuotaReportResponse, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .append_pair(
@@ -795,7 +795,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         nfs_netgroup_check_item: crate::models::Empty,
         host: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("host", &host.to_string())
             .finish();
@@ -816,7 +816,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         nfs_netgroup_flush_item: crate::models::Empty,
         host: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("host", &host.to_string())
             .finish();
@@ -838,7 +838,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         nfs_nlm_sessions_check_item: crate::models::Empty,
         cluster_ip: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateNfsNlmSessionsCheckItemResponse, Error = Error>>
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateNfsNlmSessionsCheckItemResponse, Error>>>
     {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("cluster_ip", &cluster_ip.to_string())
@@ -861,7 +861,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         nfs_reload_item: crate::models::Empty,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -881,7 +881,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn create_ntp_server(
         &self,
         ntp_server: crate::models::NtpServerCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ntp/servers",
             self.configuration.base_path
@@ -898,7 +898,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn create_smb_log_level_filter(
         &self,
         smb_log_level_filter: crate::models::SmbLogLevelFilter,
-    ) -> Box<dyn Future<Item = crate::models::CreateAuthRefreshItemResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateAuthRefreshItemResponse, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/smb/log-level/filters",
             self.configuration.base_path
@@ -916,7 +916,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         smb_share: crate::models::SmbShareCreateParams,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -937,7 +937,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         swift_account: crate::models::SwiftAccount,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1391,7 +1391,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_ftp_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::FtpSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::FtpSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ftp/settings",
             self.configuration.base_path
@@ -1408,7 +1408,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_hdfs_log_level(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::HdfsLogLevel, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsLogLevel, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/hdfs/log-level",
             self.configuration.base_path
@@ -1427,7 +1427,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         hdfs_proxyuser_id: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsProxyusers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsProxyusers, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1450,7 +1450,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         hdfs_rack_id: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsRacks, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsRacks, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1472,7 +1472,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_hdfs_ranger_plugin_settings(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsRangerPluginSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsRangerPluginSettings, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1492,7 +1492,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_hdfs_settings(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsSettings, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1511,7 +1511,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_http_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::HttpSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HttpSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/http/settings",
             self.configuration.base_path
@@ -1529,7 +1529,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackupExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackupExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("limit", &limit.to_string())
             .append_pair("resume", &resume.to_string())
@@ -1550,7 +1550,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_ndmp_contexts_backup_by_id(
         &self,
         ndmp_contexts_backup_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackup, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackup, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/contexts/backup/{NdmpContextsBackupId}",
             self.configuration.base_path,
@@ -1569,7 +1569,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBreExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBreExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("limit", &limit.to_string())
             .append_pair("resume", &resume.to_string())
@@ -1590,7 +1590,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_ndmp_contexts_bre_by_id(
         &self,
         ndmp_contexts_bre_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBre, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBre, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/contexts/bre/{NdmpContextsBreId}",
             self.configuration.base_path,
@@ -1609,7 +1609,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackupExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackupExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("limit", &limit.to_string())
             .append_pair("resume", &resume.to_string())
@@ -1630,7 +1630,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_ndmp_contexts_restore_by_id(
         &self,
         ndmp_contexts_restore_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpContextsBackup, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpContextsBackup, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/contexts/restore/{NdmpContextsRestoreId}",
             self.configuration.base_path,
@@ -1647,7 +1647,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_ndmp_diagnostics(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpDiagnostics, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpDiagnostics, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/diagnostics",
             self.configuration.base_path
@@ -1670,7 +1670,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         path: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpDumpdates, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpDumpdates, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())
@@ -1700,7 +1700,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         lnn: &str,
         page: i32,
         pagesize: i32,
-    ) -> Box<dyn Future<Item = crate::models::NdmpLogs, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpLogs, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("lnn", &lnn.to_string())
             .append_pair("page", &page.to_string())
@@ -1724,7 +1724,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         ndmp_session_id: &str,
         lnn: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSessions, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSessions, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("lnn", &lnn.to_string())
             .finish();
@@ -1751,7 +1751,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         session: &str,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSessionsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSessionsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("consolidate", &consolidate.to_string())
             .append_pair("node", &node.to_string())
@@ -1775,7 +1775,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_ndmp_settings_dmas(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsDmas, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsDmas, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/settings/dmas",
             self.configuration.base_path
@@ -1792,7 +1792,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_ndmp_settings_global(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsGlobal, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsGlobal, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/settings/global",
             self.configuration.base_path
@@ -1810,7 +1810,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_ndmp_settings_preferred_ip(
         &self,
         ndmp_settings_preferred_ip_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsPreferredIps, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsPreferredIps, Error>>> {
         let uri_str = format!(
             "{}/platform/4/protocols/ndmp/settings/preferred-ips/{NdmpSettingsPreferredIpId}",
             self.configuration.base_path,
@@ -1833,7 +1833,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         path: &str,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsVariables, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsVariables, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("path", &path.to_string())
             .append_pair("limit", &limit.to_string())
@@ -1858,7 +1858,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_ndmp_user(
         &self,
         ndmp_user_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpUsers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpUsers, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/users/{NdmpUserId}",
             self.configuration.base_path,
@@ -1880,7 +1880,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         scope: &str,
         check: bool,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsAliases, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsAliases, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .append_pair("check", &check.to_string())
@@ -1908,7 +1908,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         ignore_bad_auth: bool,
         zone: &str,
         ignore_unresolvable_hosts: bool,
-    ) -> Box<dyn Future<Item = crate::models::NfsCheckExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsCheckExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("ignore_bad_paths", &ignore_bad_paths.to_string())
             .append_pair("ignore_bad_auth", &ignore_bad_auth.to_string())
@@ -1937,7 +1937,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         nfs_export_id: &str,
         scope: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsExports, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsExports, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .append_pair("zone", &zone.to_string())
@@ -1961,7 +1961,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_nfs_exports_summary(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsExportsSummary, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsExportsSummary, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1981,7 +1981,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_nfs_log_level(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NfsLogLevel, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsLogLevel, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/nfs/log-level",
             self.configuration.base_path
@@ -1999,7 +1999,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_nfs_netgroup(
         &self,
         host: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNetgroup, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNetgroup, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("host", &host.to_string())
             .finish();
@@ -2028,7 +2028,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         client_id: &str,
         path: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmLocks, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmLocks, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("created", &created.to_string())
@@ -2059,7 +2059,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         nfs_nlm_session_id: &str,
         cluster_ip: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmSessions, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmSessions, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("cluster_ip", &cluster_ip.to_string())
             .append_pair("zone", &zone.to_string())
@@ -2087,7 +2087,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         zone: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmSessionsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmSessionsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("ip", &ip.to_string())
@@ -2116,7 +2116,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsNlmWaiters, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsNlmWaiters, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("limit", &limit.to_string())
@@ -2141,7 +2141,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         scope: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsSettingsExport, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsSettingsExport, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .append_pair("zone", &zone.to_string())
@@ -2163,7 +2163,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_nfs_settings_global(
         &self,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsSettingsGlobal, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsSettingsGlobal, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .finish();
@@ -2184,7 +2184,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_nfs_settings_zone(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsSettingsZone, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsSettingsZone, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -2205,7 +2205,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_ntp_server(
         &self,
         ntp_server_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::NtpServers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NtpServers, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ntp/servers/{NtpServerId}",
             self.configuration.base_path,
@@ -2223,7 +2223,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_ntp_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NtpSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NtpSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ntp/settings",
             self.configuration.base_path
@@ -2240,7 +2240,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_smb_log_level(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SmbLogLevel, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevel, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/smb/log-level",
             self.configuration.base_path
@@ -2258,7 +2258,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_smb_log_level_filter(
         &self,
         smb_log_level_filter_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbLogLevelFilters, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevelFilters, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/smb/log-level/filters/{SmbLogLevelFilterId}",
             self.configuration.base_path,
@@ -2280,7 +2280,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbOpenfiles, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbOpenfiles, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("limit", &limit.to_string())
@@ -2307,7 +2307,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSessions, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSessions, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("limit", &limit.to_string())
@@ -2331,7 +2331,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_smb_settings_global(
         &self,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSettingsGlobal, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSettingsGlobal, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .finish();
@@ -2353,7 +2353,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         scope: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSettingsShare, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSettingsShare, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .append_pair("zone", &zone.to_string())
@@ -2378,7 +2378,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         scope: &str,
         resolve_names: bool,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbShares, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbShares, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .append_pair("resolve_names", &resolve_names.to_string())
@@ -2403,7 +2403,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn get_smb_shares_summary(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSharesSummary, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSharesSummary, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -2423,7 +2423,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn get_snmp_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::SnmpSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SnmpSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/5/protocols/snmp/settings",
             self.configuration.base_path
@@ -2442,7 +2442,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         swift_account_id: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SwiftAccounts, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SwiftAccounts, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -2465,7 +2465,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn list_hdfs_proxyusers(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsProxyusers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsProxyusers, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -2486,7 +2486,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn list_hdfs_racks(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::HdfsRacksExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::HdfsRacksExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -2507,7 +2507,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         &self,
         limit: i32,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NdmpSettingsPreferredIps, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpSettingsPreferredIps, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("limit", &limit.to_string())
             .append_pair("resume", &resume.to_string())
@@ -2527,7 +2527,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
 
     fn list_ndmp_users(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::NdmpUsersExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NdmpUsersExtended, Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ndmp/users",
             self.configuration.base_path
@@ -2549,7 +2549,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         check: bool,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsAliasesExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsAliasesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("zone", &zone.to_string())
@@ -2582,7 +2582,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         path: &str,
         check: bool,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::NfsExportsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NfsExportsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("zone", &zone.to_string())
@@ -2613,7 +2613,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::NtpServersExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NtpServersExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("limit", &limit.to_string())
@@ -2638,7 +2638,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         sort: &str,
         dir: &str,
         level: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbLogLevelFilters, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevelFilters, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("dir", &dir.to_string())
@@ -2667,7 +2667,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         offset: i32,
         scope: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::SmbSharesExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SmbSharesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("zone", &zone.to_string())
@@ -2694,7 +2694,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
     fn list_swift_accounts(
         &self,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::SwiftAccountsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SwiftAccountsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();

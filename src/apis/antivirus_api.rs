@@ -33,15 +33,15 @@ pub trait AntivirusApi {
     fn create_antivirus_policy(
         &self,
         antivirus_policy: crate::models::AntivirusPolicyCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn create_antivirus_scan_item(
         &self,
         antivirus_scan_item: crate::models::AntivirusScanItem,
-    ) -> Box<dyn Future<Item = crate::models::CreateAntivirusScanItemResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateAntivirusScanItemResponse, Error>>>;
     fn create_antivirus_server(
         &self,
         antivirus_server: crate::models::AntivirusServerCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn delete_antivirus_policies(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_antivirus_policy(
         &self,
@@ -60,22 +60,22 @@ pub trait AntivirusApi {
     fn get_antivirus_policy(
         &self,
         antivirus_policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusPolicies, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusPolicies, Error>>>;
     fn get_antivirus_quarantine_path(
         &self,
         antivirus_quarantine_path: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusQuarantine, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusQuarantine, Error>>>;
     fn get_antivirus_server(
         &self,
         antivirus_server_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusServers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusServers, Error>>>;
     fn get_antivirus_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusSettings, Error>>>;
     fn get_reports_scan(
         &self,
         reports_scan_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsScans, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsScans, Error>>>;
     fn get_reports_scans(
         &self,
         sort: &str,
@@ -84,11 +84,11 @@ pub trait AntivirusApi {
         limit: i32,
         dir: &str,
         policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsScansExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsScansExtended, Error>>>;
     fn get_reports_threat(
         &self,
         reports_threat_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsThreats, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsThreats, Error>>>;
     fn get_reports_threats(
         &self,
         sort: &str,
@@ -98,21 +98,21 @@ pub trait AntivirusApi {
         file: &str,
         remediation: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsThreatsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsThreatsExtended, Error>>>;
     fn list_antivirus_policies(
         &self,
         sort: &str,
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusPoliciesExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusPoliciesExtended, Error>>>;
     fn list_antivirus_servers(
         &self,
         sort: &str,
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusServersExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusServersExtended, Error>>>;
     fn update_antivirus_policy(
         &self,
         antivirus_policy: crate::models::AntivirusPolicy,
@@ -138,7 +138,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn create_antivirus_policy(
         &self,
         antivirus_policy: crate::models::AntivirusPolicyCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/policies",
             self.configuration.base_path
@@ -154,7 +154,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn create_antivirus_scan_item(
         &self,
         antivirus_scan_item: crate::models::AntivirusScanItem,
-    ) -> Box<dyn Future<Item = crate::models::CreateAntivirusScanItemResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateAntivirusScanItemResponse, Error>>> {
         let uri_str = format!("{}/platform/3/antivirus/scan", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -167,7 +167,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn create_antivirus_server(
         &self,
         antivirus_server: crate::models::AntivirusServerCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/servers",
             self.configuration.base_path
@@ -276,7 +276,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn get_antivirus_policy(
         &self,
         antivirus_policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusPolicies, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusPolicies, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/policies/{AntivirusPolicyId}",
             self.configuration.base_path,
@@ -293,7 +293,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn get_antivirus_quarantine_path(
         &self,
         antivirus_quarantine_path: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusQuarantine, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusQuarantine, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/quarantine/{AntivirusQuarantinePath}",
             self.configuration.base_path,
@@ -310,7 +310,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn get_antivirus_server(
         &self,
         antivirus_server_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusServers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusServers, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/servers/{AntivirusServerId}",
             self.configuration.base_path,
@@ -326,7 +326,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
 
     fn get_antivirus_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/settings",
             self.configuration.base_path
@@ -342,7 +342,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn get_reports_scan(
         &self,
         reports_scan_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsScans, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsScans, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/reports/scans/{ReportsScanId}",
             self.configuration.base_path,
@@ -364,7 +364,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         limit: i32,
         dir: &str,
         policy_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsScansExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsScansExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("status", &status.to_string())
@@ -388,7 +388,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn get_reports_threat(
         &self,
         reports_threat_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsThreats, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsThreats, Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/reports/threats/{ReportsThreatId}",
             self.configuration.base_path,
@@ -411,7 +411,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         file: &str,
         remediation: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::ReportsThreatsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsThreatsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("scan_id", &scan_id.to_string())
@@ -439,7 +439,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusPoliciesExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusPoliciesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("limit", &limit.to_string())
@@ -464,7 +464,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         limit: i32,
         dir: &str,
         resume: &str,
-    ) -> Box<dyn Future<Item = crate::models::AntivirusServersExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::AntivirusServersExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("limit", &limit.to_string())

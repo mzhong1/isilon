@@ -35,7 +35,7 @@ pub trait ProtocolsHdfsApi {
         proxyusers_name_member: crate::models::AuthAccessAccessItemFileGroup,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn delete_proxyusers_name_member(
         &self,
         proxyusers_name_member_id: &str,
@@ -46,7 +46,7 @@ pub trait ProtocolsHdfsApi {
         &self,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::GroupMembers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::GroupMembers, Error>>>;
     fn update_proxyusers_name_member(
         &self,
         proxyusers_name_member: crate::models::Empty,
@@ -62,7 +62,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsHdfsApi for Protocol
         proxyusers_name_member: crate::models::AuthAccessAccessItemFileGroup,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -108,7 +108,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsHdfsApi for Protocol
         &self,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = crate::models::GroupMembers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::GroupMembers, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();

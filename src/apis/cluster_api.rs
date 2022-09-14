@@ -33,77 +33,77 @@ pub trait ClusterApi {
     fn create_cluster_add_node_item(
         &self,
         cluster_add_node_item: crate::models::ClusterAddNodeItem,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_diagnostics_gather_start_item(
         &self,
         diagnostics_gather_start_item: crate::models::DiagnosticsGatherSettingsExtended,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_diagnostics_gather_stop_item(
         &self,
         diagnostics_gather_stop_item: crate::models::Empty,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_diagnostics_netlogger_start_item(
         &self,
         diagnostics_netlogger_start_item: crate::models::DiagnosticsNetloggerSettings,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_diagnostics_netlogger_stop_item(
         &self,
         diagnostics_netlogger_stop_item: crate::models::Empty,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn get_cluster_config(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterConfig, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterConfig, Error>>>;
     fn get_cluster_email(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterEmail, Error = Error>>;
-    fn get_cluster_external_ips(&self) -> Box<dyn Future<Item = Vec<String>, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterEmail, Error>>>;
+    fn get_cluster_external_ips(&self) -> Box<dyn Future<Output = Result<Vec<String>, Error>>>;
     fn get_cluster_identity(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterIdentity, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterIdentity, Error>>>;
     fn get_cluster_node(
         &self,
         cluster_node_id: i32,
         timeout: f32,
-    ) -> Box<dyn Future<Item = crate::models::ClusterNodesExtendedExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterNodesExtendedExtended, Error>>>;
     fn get_cluster_nodes(
         &self,
         timeout: f32,
-    ) -> Box<dyn Future<Item = crate::models::ClusterNodesExtendedExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterNodesExtendedExtended, Error>>>;
     fn get_cluster_nodes_available(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterNodesAvailable, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterNodesAvailable, Error>>>;
     fn get_cluster_owner(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterOwner, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterOwner, Error>>>;
     fn get_cluster_statfs(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterStatfs, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterStatfs, Error>>>;
     fn get_cluster_time(&self)
-        -> Box<dyn Future<Item = crate::models::ClusterTime, Error = Error>>;
+        -> Box<dyn Future<Output = Result<crate::models::ClusterTime, Error>>>;
     fn get_cluster_timezone(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterTimezone, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterTimezone, Error>>>;
     fn get_cluster_version(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterVersion, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterVersion, Error>>>;
     fn get_diagnostics_gather(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsGatherStatus, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsGatherStatus, Error>>>;
     fn get_diagnostics_gather_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsGatherSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsGatherSettings, Error>>>;
     fn get_diagnostics_gather_status(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsGatherStatus, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsGatherStatus, Error>>>;
     fn get_diagnostics_netlogger(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsNetloggerStatus, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsNetloggerStatus, Error>>>;
     fn get_diagnostics_netlogger_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsNetloggerSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsNetloggerSettings, Error>>>;
     fn get_diagnostics_netlogger_status(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsNetloggerStatus, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsNetloggerStatus, Error>>>;
     fn get_timezone_region(
         &self,
         timezone_region_id: &str,
@@ -113,10 +113,10 @@ pub trait ClusterApi {
         dst_reset: bool,
         limit: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::TimezoneRegions, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::TimezoneRegions, Error>>>;
     fn get_timezone_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::TimezoneSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::TimezoneSettings, Error>>>;
     fn update_cluster_email(
         &self,
         cluster_email: crate::models::ClusterEmailExtended,
@@ -156,7 +156,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn create_cluster_add_node_item(
         &self,
         cluster_add_node_item: crate::models::ClusterAddNodeItem,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/add-node",
             self.configuration.base_path
@@ -172,7 +172,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn create_diagnostics_gather_start_item(
         &self,
         diagnostics_gather_start_item: crate::models::DiagnosticsGatherSettingsExtended,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/gather/start",
             self.configuration.base_path
@@ -189,7 +189,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn create_diagnostics_gather_stop_item(
         &self,
         diagnostics_gather_stop_item: crate::models::Empty,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/gather/stop",
             self.configuration.base_path
@@ -205,7 +205,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn create_diagnostics_netlogger_start_item(
         &self,
         diagnostics_netlogger_start_item: crate::models::DiagnosticsNetloggerSettings,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/netlogger/start",
             self.configuration.base_path
@@ -222,7 +222,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn create_diagnostics_netlogger_stop_item(
         &self,
         diagnostics_netlogger_stop_item: crate::models::Empty,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/netlogger/stop",
             self.configuration.base_path
@@ -237,7 +237,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_config(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterConfig, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterConfig, Error>>> {
         let uri_str = format!("{}/platform/3/cluster/config", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -249,7 +249,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_email(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterEmail, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterEmail, Error>>> {
         let uri_str = format!("{}/platform/1/cluster/email", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -259,7 +259,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
         )
     }
 
-    fn get_cluster_external_ips(&self) -> Box<dyn Future<Item = Vec<String>, Error = Error>> {
+    fn get_cluster_external_ips(&self) -> Box<dyn Future<Output = Result<Vec<String>, Error>>> {
         let uri_str = format!(
             "{}/platform/2/cluster/external-ips",
             self.configuration.base_path
@@ -274,7 +274,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_identity(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterIdentity, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterIdentity, Error>>> {
         let uri_str = format!(
             "{}/platform/5/cluster/identity",
             self.configuration.base_path
@@ -291,7 +291,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
         &self,
         cluster_node_id: i32,
         timeout: f32,
-    ) -> Box<dyn Future<Item = crate::models::ClusterNodesExtendedExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterNodesExtendedExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("timeout", &timeout.to_string())
             .finish();
@@ -312,7 +312,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn get_cluster_nodes(
         &self,
         timeout: f32,
-    ) -> Box<dyn Future<Item = crate::models::ClusterNodesExtendedExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterNodesExtendedExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("timeout", &timeout.to_string())
             .finish();
@@ -330,7 +330,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_nodes_available(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterNodesAvailable, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterNodesAvailable, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/nodes-available",
             self.configuration.base_path
@@ -345,7 +345,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_owner(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterOwner, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterOwner, Error>>> {
         let uri_str = format!("{}/platform/1/cluster/owner", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -357,7 +357,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_statfs(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterStatfs, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterStatfs, Error>>> {
         let uri_str = format!("{}/platform/1/cluster/statfs", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -369,7 +369,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_time(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterTime, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterTime, Error>>> {
         let uri_str = format!("{}/platform/3/cluster/time", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -381,7 +381,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_timezone(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterTimezone, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterTimezone, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/timezone",
             self.configuration.base_path
@@ -397,7 +397,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_cluster_version(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::ClusterVersion, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterVersion, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/version",
             self.configuration.base_path
@@ -413,7 +413,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_diagnostics_gather(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsGatherStatus, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsGatherStatus, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/gather",
             self.configuration.base_path
@@ -429,7 +429,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_diagnostics_gather_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsGatherSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsGatherSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/gather/settings",
             self.configuration.base_path
@@ -445,7 +445,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_diagnostics_gather_status(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsGatherStatus, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsGatherStatus, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/gather/status",
             self.configuration.base_path
@@ -461,7 +461,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_diagnostics_netlogger(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsNetloggerStatus, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsNetloggerStatus, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/netlogger",
             self.configuration.base_path
@@ -477,7 +477,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_diagnostics_netlogger_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsNetloggerSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsNetloggerSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/netlogger/settings",
             self.configuration.base_path
@@ -493,7 +493,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_diagnostics_netlogger_status(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DiagnosticsNetloggerStatus, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DiagnosticsNetloggerStatus, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/diagnostics/netlogger/status",
             self.configuration.base_path
@@ -516,7 +516,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
         dst_reset: bool,
         limit: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::TimezoneRegions, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::TimezoneRegions, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())
@@ -542,7 +542,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
 
     fn get_timezone_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::TimezoneSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::TimezoneSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/timezone/settings",
             self.configuration.base_path

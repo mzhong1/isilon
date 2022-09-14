@@ -35,7 +35,7 @@ pub trait AuthGroupsApi {
         group: &str,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn delete_group_member(
         &self,
         group_member_id: &str,
@@ -51,7 +51,7 @@ pub trait AuthGroupsApi {
         limit: i32,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = crate::models::GroupMembers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::GroupMembers, Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> AuthGroupsApi for AuthGroupsApiClient<C> {
@@ -61,7 +61,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthGroupsApi for AuthGroupsA
         group: &str,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .append_pair("provider", &provider.to_string())
@@ -114,7 +114,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthGroupsApi for AuthGroupsA
         limit: i32,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = crate::models::GroupMembers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::GroupMembers, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("resolve_names", &resolve_names.to_string())
             .append_pair("resume", &resume.to_string())

@@ -32,12 +32,12 @@ impl<C: hyper::client::connect::Connect> DedupeApiClient<C> {
 pub trait DedupeApi {
     fn get_dedupe_dedupe_summary(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DedupeDedupeSummary, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeDedupeSummary, Error>>>;
     fn get_dedupe_report(
         &self,
         dedupe_report_id: &str,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::DedupeReports, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeReports, Error>>>;
     fn get_dedupe_reports(
         &self,
         sort: &str,
@@ -48,10 +48,10 @@ pub trait DedupeApi {
         job_type: &str,
         limit: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::DedupeReportsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeReportsExtended, Error>>>;
     fn get_dedupe_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DedupeSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeSettings, Error>>>;
     fn update_dedupe_settings(
         &self,
         dedupe_settings: crate::models::DedupeSettingsExtended,
@@ -61,7 +61,7 @@ pub trait DedupeApi {
 impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient<C> {
     fn get_dedupe_dedupe_summary(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DedupeDedupeSummary, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeDedupeSummary, Error>>> {
         let uri_str = format!(
             "{}/platform/1/dedupe/dedupe-summary",
             self.configuration.base_path
@@ -78,7 +78,7 @@ impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient
         &self,
         dedupe_report_id: &str,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::DedupeReports, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeReports, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .finish();
@@ -106,7 +106,7 @@ impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient
         job_type: &str,
         limit: i32,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::DedupeReportsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeReportsExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("begin", &begin.to_string())
@@ -131,7 +131,7 @@ impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient
 
     fn get_dedupe_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::DedupeSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::DedupeSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/1/dedupe/settings",
             self.configuration.base_path

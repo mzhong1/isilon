@@ -34,13 +34,13 @@ pub trait UpgradeClusterApi {
         &self,
         nodes_node_patch_sync_item: crate::models::Empty,
         lnn: i32,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn get_nodes_node_firmware_status(
         &self,
         lnn: i32,
         devices: bool,
         package: bool,
-    ) -> Box<dyn Future<Item = crate::models::NodesNodeFirmwareStatus, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::NodesNodeFirmwareStatus, Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> UpgradeClusterApi
@@ -50,7 +50,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeClusterApi
         &self,
         nodes_node_patch_sync_item: crate::models::Empty,
         lnn: i32,
-    ) -> Box<dyn Future<Item = crate::models::Empty, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/4/upgrade/cluster/nodes/{Lnn}/patch/sync",
             self.configuration.base_path,
@@ -69,7 +69,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeClusterApi
         lnn: i32,
         devices: bool,
         package: bool,
-    ) -> Box<dyn Future<Item = crate::models::NodesNodeFirmwareStatus, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::NodesNodeFirmwareStatus, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("devices", &devices.to_string())
             .append_pair("package", &package.to_string())

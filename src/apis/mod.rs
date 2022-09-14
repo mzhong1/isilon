@@ -198,7 +198,7 @@ fn query<T, R, C: hyper::client::connect::Connect + 'static>(
     url: &str,
     body: &T,
     method: hyper::Method,
-) -> Box<dyn Future<Item = R, Error = Error>>
+) -> Box<dyn Future<Output = Result<R, Error>>>
 where
     T: Serialize,
     R: DeserializeOwned + 'static,
@@ -267,7 +267,7 @@ fn custom_query<T, R, C: hyper::client::connect::Connect + 'static>(
     body: &T,
     method: hyper::Method,
     headers: HashMap<String, String>,
-) -> Box<dyn Future<Item = R, Error = Error>>
+) -> Box<dyn Future<Output = Result<R, Error>>>
 where
     T: Serialize,
     R: DeserializeOwned + 'static,

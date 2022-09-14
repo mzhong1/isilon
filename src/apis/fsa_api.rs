@@ -35,14 +35,14 @@ pub trait FsaApi {
     fn get_fsa_result(
         &self,
         fsa_result_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::FsaResults, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::FsaResults, Error>>>;
     fn get_fsa_results(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::FsaResultsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::FsaResultsExtended, Error>>>;
     fn get_fsa_settings(
         &self,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::FsaSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::FsaSettings, Error>>>;
     fn update_fsa_result(
         &self,
         fsa_result: crate::models::FsaResult,
@@ -82,7 +82,7 @@ impl<C: hyper::client::connect::Connect + 'static> FsaApi for FsaApiClient<C> {
     fn get_fsa_result(
         &self,
         fsa_result_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::FsaResults, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::FsaResults, Error>>> {
         let uri_str = format!(
             "{}/platform/3/fsa/results/{FsaResultId}",
             self.configuration.base_path,
@@ -98,7 +98,7 @@ impl<C: hyper::client::connect::Connect + 'static> FsaApi for FsaApiClient<C> {
 
     fn get_fsa_results(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::FsaResultsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::FsaResultsExtended, Error>>> {
         let uri_str = format!("{}/platform/3/fsa/results", self.configuration.base_path);
         query(
             self.configuration.borrow(),
@@ -111,7 +111,7 @@ impl<C: hyper::client::connect::Connect + 'static> FsaApi for FsaApiClient<C> {
     fn get_fsa_settings(
         &self,
         scope: &str,
-    ) -> Box<dyn Future<Item = crate::models::FsaSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::FsaSettings, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("scope", &scope.to_string())
             .finish();

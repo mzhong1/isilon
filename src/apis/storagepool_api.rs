@@ -36,8 +36,7 @@ pub trait StoragepoolApi {
         assess: bool,
     ) -> Box<
         dyn Future<
-            Item = crate::models::CreateCompatibilitiesClassActiveItemResponse,
-            Error = Error,
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
         >,
     >;
     fn create_compatibilities_ssd_active_item(
@@ -46,18 +45,17 @@ pub trait StoragepoolApi {
         assess: bool,
     ) -> Box<
         dyn Future<
-            Item = crate::models::CreateCompatibilitiesClassActiveItemResponse,
-            Error = Error,
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
         >,
     >;
     fn create_storagepool_nodepool(
         &self,
         storagepool_nodepool: crate::models::StoragepoolNodepoolCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateStoragepoolTierResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateStoragepoolTierResponse, Error>>>;
     fn create_storagepool_tier(
         &self,
         storagepool_tier: crate::models::StoragepoolTierCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateStoragepoolTierResponse, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateStoragepoolTierResponse, Error>>>;
     fn delete_compatibilities_class_active_by_id(
         &self,
         compatibilities_class_active_id: &str,
@@ -81,56 +79,56 @@ pub trait StoragepoolApi {
     fn get_compatibilities_class_active_by_id(
         &self,
         compatibilities_class_active_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesClassActive, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesClassActive, Error>>>;
     fn get_compatibilities_class_available(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesClassAvailable, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesClassAvailable, Error>>>;
     fn get_compatibilities_ssd_active_by_id(
         &self,
         compatibilities_ssd_active_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesSsdActive, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesSsdActive, Error>>>;
     fn get_compatibilities_ssd_available(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesSsdAvailable, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesSsdAvailable, Error>>>;
     fn get_storagepool_nodepool(
         &self,
         storagepool_nodepool_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolNodepools, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolNodepools, Error>>>;
     fn get_storagepool_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolSettings, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolSettings, Error>>>;
     fn get_storagepool_status(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolStatus, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolStatus, Error>>>;
     fn get_storagepool_storagepools(
         &self,
         sort: &str,
         toplevels: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolStoragepools, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolStoragepools, Error>>>;
     fn get_storagepool_suggested_protection_nid(
         &self,
         storagepool_suggested_protection_nid: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolSuggestedProtection, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolSuggestedProtection, Error>>>;
     fn get_storagepool_tier(
         &self,
         storagepool_tier_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolTiers, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolTiers, Error>>>;
     fn get_storagepool_unprovisioned(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolUnprovisioned, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolUnprovisioned, Error>>>;
     fn list_compatibilities_class_active(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesClassActiveExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesClassActiveExtended, Error>>>;
     fn list_compatibilities_ssd_active(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesSsdActiveExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesSsdActiveExtended, Error>>>;
     fn list_storagepool_nodepools(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolNodepoolsExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolNodepoolsExtended, Error>>>;
     fn list_storagepool_tiers(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolTiersExtended, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolTiersExtended, Error>>>;
     fn update_compatibilities_ssd_active_by_id(
         &self,
         compatibilities_ssd_active_id_params: crate::models::CompatibilitiesSsdActiveIdParams,
@@ -160,8 +158,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
         assess: bool,
     ) -> Box<
         dyn Future<
-            Item = crate::models::CreateCompatibilitiesClassActiveItemResponse,
-            Error = Error,
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
         >,
     > {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
@@ -185,8 +182,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
         assess: bool,
     ) -> Box<
         dyn Future<
-            Item = crate::models::CreateCompatibilitiesClassActiveItemResponse,
-            Error = Error,
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
         >,
     > {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
@@ -207,7 +203,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn create_storagepool_nodepool(
         &self,
         storagepool_nodepool: crate::models::StoragepoolNodepoolCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateStoragepoolTierResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateStoragepoolTierResponse, Error>>> {
         let uri_str = format!(
             "{}/platform/3/storagepool/nodepools",
             self.configuration.base_path
@@ -223,7 +219,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn create_storagepool_tier(
         &self,
         storagepool_tier: crate::models::StoragepoolTierCreateParams,
-    ) -> Box<dyn Future<Item = crate::models::CreateStoragepoolTierResponse, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateStoragepoolTierResponse, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/tiers",
             self.configuration.base_path
@@ -338,7 +334,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn get_compatibilities_class_active_by_id(
         &self,
         compatibilities_class_active_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesClassActive, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesClassActive, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/compatibilities/class/active/{CompatibilitiesClassActiveId}",
             self.configuration.base_path,
@@ -354,7 +350,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn get_compatibilities_class_available(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesClassAvailable, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesClassAvailable, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/compatibilities/class/available",
             self.configuration.base_path
@@ -370,7 +366,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn get_compatibilities_ssd_active_by_id(
         &self,
         compatibilities_ssd_active_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesSsdActive, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesSsdActive, Error>>> {
         let uri_str = format!(
             "{}/platform/3/storagepool/compatibilities/ssd/active/{CompatibilitiesSsdActiveId}",
             self.configuration.base_path,
@@ -386,7 +382,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn get_compatibilities_ssd_available(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesSsdAvailable, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesSsdAvailable, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/compatibilities/ssd/available",
             self.configuration.base_path
@@ -402,7 +398,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn get_storagepool_nodepool(
         &self,
         storagepool_nodepool_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolNodepools, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolNodepools, Error>>> {
         let uri_str = format!(
             "{}/platform/3/storagepool/nodepools/{StoragepoolNodepoolId}",
             self.configuration.base_path,
@@ -418,7 +414,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn get_storagepool_settings(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolSettings, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolSettings, Error>>> {
         let uri_str = format!(
             "{}/platform/5/storagepool/settings",
             self.configuration.base_path
@@ -433,7 +429,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn get_storagepool_status(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolStatus, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolStatus, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/status",
             self.configuration.base_path
@@ -451,7 +447,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
         sort: &str,
         toplevels: &str,
         dir: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolStoragepools, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolStoragepools, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("toplevels", &toplevels.to_string())
@@ -472,7 +468,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn get_storagepool_suggested_protection_nid(
         &self,
         storagepool_suggested_protection_nid: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolSuggestedProtection, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolSuggestedProtection, Error>>> {
         let uri_str = format!(
             "{}/platform/3/storagepool/suggested-protection/{StoragepoolSuggestedProtectionNid}",
             self.configuration.base_path,
@@ -489,7 +485,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn get_storagepool_tier(
         &self,
         storagepool_tier_id: &str,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolTiers, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolTiers, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/tiers/{StoragepoolTierId}",
             self.configuration.base_path,
@@ -505,7 +501,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn get_storagepool_unprovisioned(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolUnprovisioned, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolUnprovisioned, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/unprovisioned",
             self.configuration.base_path
@@ -520,7 +516,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn list_compatibilities_class_active(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesClassActiveExtended, Error = Error>>
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesClassActiveExtended, Error>>>
     {
         let uri_str = format!(
             "{}/platform/1/storagepool/compatibilities/class/active",
@@ -536,7 +532,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn list_compatibilities_ssd_active(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::CompatibilitiesSsdActiveExtended, Error = Error>>
+    ) -> Box<dyn Future<Output = Result<crate::models::CompatibilitiesSsdActiveExtended, Error>>>
     {
         let uri_str = format!(
             "{}/platform/3/storagepool/compatibilities/ssd/active",
@@ -552,7 +548,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn list_storagepool_nodepools(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolNodepoolsExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolNodepoolsExtended, Error>>> {
         let uri_str = format!(
             "{}/platform/3/storagepool/nodepools",
             self.configuration.base_path
@@ -567,7 +563,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
 
     fn list_storagepool_tiers(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::StoragepoolTiersExtended, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolTiersExtended, Error>>> {
         let uri_str = format!(
             "{}/platform/1/storagepool/tiers",
             self.configuration.base_path

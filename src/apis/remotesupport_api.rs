@@ -32,7 +32,7 @@ impl<C: hyper::client::connect::Connect> RemotesupportApiClient<C> {
 pub trait RemotesupportApi {
     fn get_remotesupport_connectemc(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::RemotesupportConnectemc, Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::RemotesupportConnectemc, Error>>>;
     fn update_remotesupport_connectemc(
         &self,
         remotesupport_connectemc: crate::models::RemotesupportConnectemcConnectemc,
@@ -42,7 +42,7 @@ pub trait RemotesupportApi {
 impl<C: hyper::client::connect::Connect + 'static> RemotesupportApi for RemotesupportApiClient<C> {
     fn get_remotesupport_connectemc(
         &self,
-    ) -> Box<dyn Future<Item = crate::models::RemotesupportConnectemc, Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::RemotesupportConnectemc, Error>>> {
         let uri_str = format!(
             "{}/platform/1/remotesupport/connectemc",
             self.configuration.base_path
