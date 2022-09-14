@@ -38,7 +38,7 @@ pub trait JobApi {
         &self,
         job_policy: crate::models::JobPolicyCreateParams,
     ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
-    fn delete_job_policy(&self, job_policy_id: &str) -> Box<dyn Future<Item = (), Error = Error>>;
+    fn delete_job_policy(&self, job_policy_id: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_job_events(
         &self,
         begin: i32,
@@ -114,17 +114,17 @@ pub trait JobApi {
         &self,
         job_job: crate::models::JobJob,
         job_job_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_job_policy(
         &self,
         job_policy: crate::models::JobPolicy,
         job_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_job_type(
         &self,
         job_type: crate::models::JobType,
         job_type_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
@@ -154,7 +154,7 @@ impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
         )
     }
 
-    fn delete_job_policy(&self, job_policy_id: &str) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_job_policy(&self, job_policy_id: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/job/policies/{JobPolicyId}",
             self.configuration.base_path,
@@ -424,7 +424,7 @@ impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
         &self,
         job_job: crate::models::JobJob,
         job_job_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/job/jobs/{JobJobId}",
             self.configuration.base_path,
@@ -437,7 +437,7 @@ impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
         &self,
         job_policy: crate::models::JobPolicy,
         job_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/job/policies/{JobPolicyId}",
             self.configuration.base_path,
@@ -450,7 +450,7 @@ impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
         &self,
         job_type: crate::models::JobType,
         job_type_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/job/types/{JobTypeId}",
             self.configuration.base_path,

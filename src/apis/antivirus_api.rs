@@ -42,21 +42,21 @@ pub trait AntivirusApi {
         &self,
         antivirus_server: crate::models::AntivirusServerCreateParams,
     ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
-    fn delete_antivirus_policies(&self) -> Box<dyn Future<Item = (), Error = Error>>;
+    fn delete_antivirus_policies(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_antivirus_policy(
         &self,
         antivirus_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_antivirus_server(
         &self,
         antivirus_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_antivirus_servers(&self) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_antivirus_servers(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_reports_scan(
         &self,
         reports_scan_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_reports_scans(&self, age: i32) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_reports_scans(&self, age: i32) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_antivirus_policy(
         &self,
         antivirus_policy_id: &str,
@@ -117,21 +117,21 @@ pub trait AntivirusApi {
         &self,
         antivirus_policy: crate::models::AntivirusPolicy,
         antivirus_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_antivirus_quarantine_path(
         &self,
         antivirus_quarantine_path_params: crate::models::AntivirusQuarantinePathParams,
         antivirus_quarantine_path: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_antivirus_server(
         &self,
         antivirus_server: crate::models::AntivirusServer,
         antivirus_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_antivirus_settings(
         &self,
         antivirus_settings: crate::models::AntivirusSettingsSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApiClient<C> {
@@ -180,7 +180,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         )
     }
 
-    fn delete_antivirus_policies(&self) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_antivirus_policies(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/policies",
             self.configuration.base_path
@@ -196,7 +196,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn delete_antivirus_policy(
         &self,
         antivirus_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/policies/{AntivirusPolicyId}",
             self.configuration.base_path,
@@ -213,7 +213,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn delete_antivirus_server(
         &self,
         antivirus_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/servers/{AntivirusServerId}",
             self.configuration.base_path,
@@ -227,7 +227,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         )
     }
 
-    fn delete_antivirus_servers(&self) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_antivirus_servers(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/servers",
             self.configuration.base_path
@@ -243,7 +243,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn delete_reports_scan(
         &self,
         reports_scan_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/antivirus/reports/scans/{ReportsScanId}",
             self.configuration.base_path,
@@ -257,7 +257,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         )
     }
 
-    fn delete_reports_scans(&self, age: i32) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_reports_scans(&self, age: i32) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("age", &age.to_string())
             .finish();
@@ -487,7 +487,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         &self,
         antivirus_policy: crate::models::AntivirusPolicy,
         antivirus_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/antivirus/policies/{AntivirusPolicyId}",
             self.configuration.base_path,
@@ -500,7 +500,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         &self,
         antivirus_quarantine_path_params: crate::models::AntivirusQuarantinePathParams,
         antivirus_quarantine_path: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/antivirus/quarantine/{AntivirusQuarantinePath}",
             self.configuration.base_path,
@@ -517,7 +517,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
         &self,
         antivirus_server: crate::models::AntivirusServer,
         antivirus_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/antivirus/servers/{AntivirusServerId}",
             self.configuration.base_path,
@@ -529,7 +529,7 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn update_antivirus_settings(
         &self,
         antivirus_settings: crate::models::AntivirusSettingsSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/antivirus/settings",
             self.configuration.base_path

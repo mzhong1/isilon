@@ -42,7 +42,7 @@ pub trait HardwareApi {
     fn delete_hardware_tape_name(
         &self,
         hardware_tape_name: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_hardware_fcport(
         &self,
         hardware_fcport_id: i32,
@@ -68,12 +68,12 @@ pub trait HardwareApi {
         hardware_fcport: crate::models::HardwareFcport,
         hardware_fcport_id: i32,
         lnn: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_hardware_tape_name(
         &self,
         hardware_tape_name_params: crate::models::HardwareTapeNameParams,
         hardware_tape_name: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> HardwareApi for HardwareApiClient<C> {
@@ -109,7 +109,7 @@ impl<C: hyper::client::connect::Connect + 'static> HardwareApi for HardwareApiCl
     fn delete_hardware_tape_name(
         &self,
         hardware_tape_name: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/hardware/tape/{HardwareTapeName}",
             self.configuration.base_path,
@@ -202,7 +202,7 @@ impl<C: hyper::client::connect::Connect + 'static> HardwareApi for HardwareApiCl
         hardware_fcport: crate::models::HardwareFcport,
         hardware_fcport_id: i32,
         lnn: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("lnn", &lnn.to_string())
             .finish();
@@ -219,7 +219,7 @@ impl<C: hyper::client::connect::Connect + 'static> HardwareApi for HardwareApiCl
         &self,
         hardware_tape_name_params: crate::models::HardwareTapeNameParams,
         hardware_tape_name: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/hardware/tape/{HardwareTapeName}",
             self.configuration.base_path,

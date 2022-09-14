@@ -61,20 +61,20 @@ pub trait CloudApi {
     fn delete_cloud_access_guid(
         &self,
         cloud_access_guid: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_cloud_account(
         &self,
         cloud_account_id: &str,
         acknowledge_force_delete: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_cloud_pool(
         &self,
         cloud_pool_id: &str,
         acknowledge_force_delete: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_cloud_proxy(&self, cloud_proxy_id: &str)
-        -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_settings_reporting_eula(&self) -> Box<dyn Future<Item = (), Error = Error>>;
+        -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_settings_reporting_eula(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_cloud_access_guid(
         &self,
         cloud_access_guid: &str,
@@ -145,26 +145,26 @@ pub trait CloudApi {
         &self,
         cloud_account: crate::models::CloudAccount,
         cloud_account_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cloud_job(
         &self,
         cloud_job: crate::models::CloudJob,
         cloud_job_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cloud_pool(
         &self,
         cloud_pool: crate::models::CloudPool,
         cloud_pool_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cloud_proxy(
         &self,
         cloud_proxy: crate::models::CloudProxy,
         cloud_proxy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cloud_settings(
         &self,
         cloud_settings: crate::models::CloudSettingsSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C> {
@@ -275,7 +275,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
     fn delete_cloud_access_guid(
         &self,
         cloud_access_guid: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/cloud/access/{CloudAccessGuid}",
             self.configuration.base_path,
@@ -293,7 +293,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         &self,
         cloud_account_id: &str,
         acknowledge_force_delete: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair(
                 "acknowledge_force_delete",
@@ -318,7 +318,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         &self,
         cloud_pool_id: &str,
         acknowledge_force_delete: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair(
                 "acknowledge_force_delete",
@@ -342,7 +342,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
     fn delete_cloud_proxy(
         &self,
         cloud_proxy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/cloud/proxies/{CloudProxyId}",
             self.configuration.base_path,
@@ -356,7 +356,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         )
     }
 
-    fn delete_settings_reporting_eula(&self) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_settings_reporting_eula(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/cloud/settings/reporting-eula",
             self.configuration.base_path
@@ -645,7 +645,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         &self,
         cloud_account: crate::models::CloudAccount,
         cloud_account_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/4/cloud/accounts/{CloudAccountId}",
             self.configuration.base_path,
@@ -658,7 +658,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         &self,
         cloud_job: crate::models::CloudJob,
         cloud_job_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/cloud/jobs/{CloudJobId}",
             self.configuration.base_path,
@@ -671,7 +671,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         &self,
         cloud_pool: crate::models::CloudPool,
         cloud_pool_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/cloud/pools/{CloudPoolId}",
             self.configuration.base_path,
@@ -684,7 +684,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
         &self,
         cloud_proxy: crate::models::CloudProxy,
         cloud_proxy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/4/cloud/proxies/{CloudProxyId}",
             self.configuration.base_path,
@@ -696,7 +696,7 @@ impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C
     fn update_cloud_settings(
         &self,
         cloud_settings: crate::models::CloudSettingsSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!("{}/platform/3/cloud/settings", self.configuration.base_path);
         put(self.configuration.borrow(), &uri, &cloud_settings)
     }

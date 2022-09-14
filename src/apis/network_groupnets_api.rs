@@ -47,13 +47,13 @@ pub trait NetworkGroupnetsApi {
         groupnet_subnet_id: &str,
         groupnet: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_subnets_subnet_pool(
         &self,
         subnets_subnet_pool_id: &str,
         groupnet: &str,
         subnet: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_groupnet_subnet(
         &self,
         groupnet_subnet_id: &str,
@@ -90,7 +90,7 @@ pub trait NetworkGroupnetsApi {
         groupnet_subnet_id: &str,
         groupnet: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_subnets_subnet_pool(
         &self,
         subnets_subnet_pool: crate::models::SubnetsSubnetPool,
@@ -98,7 +98,7 @@ pub trait NetworkGroupnetsApi {
         groupnet: &str,
         subnet: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsApi
@@ -154,7 +154,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsApi
         groupnet_subnet_id: &str,
         groupnet: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .finish();
@@ -178,7 +178,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsApi
         subnets_subnet_pool_id: &str,
         groupnet: &str,
         subnet: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!("{}/platform/3/network/groupnets/{Groupnet}/subnets/{Subnet}/pools/{SubnetsSubnetPoolId}" , self.configuration.base_path, SubnetsSubnetPoolId=subnets_subnet_pool_id, Groupnet=groupnet, Subnet=subnet);
         query(
             self.configuration.borrow(),
@@ -297,7 +297,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsApi
         groupnet_subnet_id: &str,
         groupnet: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .finish();
@@ -319,7 +319,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsApi
         groupnet: &str,
         subnet: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .finish();

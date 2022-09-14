@@ -48,7 +48,7 @@ pub trait QuotaApi {
         settings_notification: crate::models::QuotaNotificationCreateParams,
     ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
     fn delete_quota_quota(&self, quota_quota_id: &str)
-        -> Box<dyn Future<Item = (), Error = Error>>;
+        -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_quota_quotas(
         &self,
         enforced: bool,
@@ -59,21 +59,21 @@ pub trait QuotaApi {
         persona: &str,
         path: &str,
         _type: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_quota_report(
         &self,
         quota_report_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_settings_mapping(
         &self,
         settings_mapping_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_settings_mappings(&self) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_settings_mappings(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_settings_notification(
         &self,
         settings_notification_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_settings_notifications(&self) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_settings_notifications(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_quota_license(
         &self,
     ) -> Box<dyn Future<Item = crate::models::LicenseLicense, Error = Error>>;
@@ -137,21 +137,21 @@ pub trait QuotaApi {
         &self,
         quota_quota: crate::models::QuotaQuota,
         quota_quota_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_mapping(
         &self,
         settings_mapping: crate::models::SettingsMappingExtended,
         settings_mapping_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_notification(
         &self,
         settings_notification: crate::models::QuotaNotification,
         settings_notification_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_reports(
         &self,
         settings_reports: crate::models::SettingsReportsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C> {
@@ -223,7 +223,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
     fn delete_quota_quota(
         &self,
         quota_quota_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/quotas/{QuotaQuotaId}",
             self.configuration.base_path,
@@ -247,7 +247,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
         persona: &str,
         path: &str,
         _type: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("enforced", &enforced.to_string())
             .append_pair("include_snapshots", &include_snapshots.to_string())
@@ -273,7 +273,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
     fn delete_quota_report(
         &self,
         quota_report_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/reports/{QuotaReportId}",
             self.configuration.base_path,
@@ -290,7 +290,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
     fn delete_settings_mapping(
         &self,
         settings_mapping_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/mappings/{SettingsMappingId}",
             self.configuration.base_path,
@@ -304,7 +304,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
         )
     }
 
-    fn delete_settings_mappings(&self) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_settings_mappings(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/mappings",
             self.configuration.base_path
@@ -320,7 +320,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
     fn delete_settings_notification(
         &self,
         settings_notification_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/notifications/{SettingsNotificationId}",
             self.configuration.base_path,
@@ -334,7 +334,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
         )
     }
 
-    fn delete_settings_notifications(&self) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_settings_notifications(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/notifications",
             self.configuration.base_path
@@ -575,7 +575,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
         &self,
         quota_quota: crate::models::QuotaQuota,
         quota_quota_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/quotas/{QuotaQuotaId}",
             self.configuration.base_path,
@@ -588,7 +588,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
         &self,
         settings_mapping: crate::models::SettingsMappingExtended,
         settings_mapping_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/mappings/{SettingsMappingId}",
             self.configuration.base_path,
@@ -601,7 +601,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
         &self,
         settings_notification: crate::models::QuotaNotification,
         settings_notification_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/notifications/{SettingsNotificationId}",
             self.configuration.base_path,
@@ -617,7 +617,7 @@ impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C
     fn update_settings_reports(
         &self,
         settings_reports: crate::models::SettingsReportsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/quota/settings/reports",
             self.configuration.base_path

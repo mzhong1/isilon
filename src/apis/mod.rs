@@ -234,7 +234,7 @@ fn put<T, C: hyper::client::connect::Connect + 'static>(
     config: &configuration::Configuration<C>,
     url: &str,
     body: &T,
-) -> Box<dyn Future<Item = (), Error = Error>>
+) -> Box<dyn Future<Output = Result<(), Error>>>
 where
     T: Serialize,
 {

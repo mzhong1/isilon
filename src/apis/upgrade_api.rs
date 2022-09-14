@@ -79,17 +79,17 @@ pub trait UpgradeApi {
     fn create_hardware_start_item(
         &self,
         hardware_start_item: crate::models::HardwareStartItem,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn create_hardware_stop_item(
         &self,
         hardware_stop_item: crate::models::HardwareStopItem,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_cluster_patch_patch(
         &self,
         cluster_patch_patch_id: &str,
         _override: bool,
         rolling: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_cluster_firmware_progress(
         &self,
     ) -> Box<dyn Future<Item = crate::models::ClusterFirmwareProgress, Error = Error>>;
@@ -129,7 +129,7 @@ pub trait UpgradeApi {
     fn update_cluster_upgrade(
         &self,
         cluster_upgrade: crate::models::ClusterUpgrade,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClient<C> {
@@ -318,7 +318,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_hardware_start_item(
         &self,
         hardware_start_item: crate::models::HardwareStartItem,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/5/upgrade/hardware/start",
             self.configuration.base_path
@@ -334,7 +334,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_hardware_stop_item(
         &self,
         hardware_stop_item: crate::models::HardwareStopItem,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/5/upgrade/hardware/stop",
             self.configuration.base_path
@@ -352,7 +352,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
         cluster_patch_patch_id: &str,
         _override: bool,
         rolling: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("override", &_override.to_string())
             .append_pair("rolling", &rolling.to_string())
@@ -525,7 +525,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn update_cluster_upgrade(
         &self,
         cluster_upgrade: crate::models::ClusterUpgrade,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/5/upgrade/cluster/upgrade",
             self.configuration.base_path

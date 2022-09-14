@@ -66,7 +66,7 @@ pub trait NetworkGroupnetsSubnetsApi {
         groupnet: &str,
         subnet: &str,
         pool: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_pools_pool_interfaces(
         &self,
         groupnet: &str,
@@ -102,7 +102,7 @@ pub trait NetworkGroupnetsSubnetsApi {
         groupnet: &str,
         subnet: &str,
         pool: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsSubnetsApi
@@ -184,7 +184,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsSubnetsApi
         groupnet: &str,
         subnet: &str,
         pool: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!("{}/platform/3/network/groupnets/{Groupnet}/subnets/{Subnet}/pools/{Pool}/rules/{PoolsPoolRuleId}" , self.configuration.base_path, PoolsPoolRuleId=pools_pool_rule_id, Groupnet=groupnet, Subnet=subnet, Pool=pool);
         query(
             self.configuration.borrow(),
@@ -283,7 +283,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsSubnetsApi
         groupnet: &str,
         subnet: &str,
         pool: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!("{}/platform/3/network/groupnets/{Groupnet}/subnets/{Subnet}/pools/{Pool}/rules/{PoolsPoolRuleId}" , self.configuration.base_path, PoolsPoolRuleId=pools_pool_rule_id, Groupnet=groupnet, Subnet=subnet, Pool=pool);
         put(self.configuration.borrow(), &uri_str, &pools_pool_rule)
     }

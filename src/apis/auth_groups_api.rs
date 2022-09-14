@@ -42,7 +42,7 @@ pub trait AuthGroupsApi {
         group: &str,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn list_group_members(
         &self,
         group: &str,
@@ -86,7 +86,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthGroupsApi for AuthGroupsA
         group: &str,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .append_pair("provider", &provider.to_string())

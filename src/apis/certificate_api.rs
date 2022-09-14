@@ -37,7 +37,7 @@ pub trait CertificateApi {
     fn delete_certificate_server_by_id(
         &self,
         certificate_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_certificate_server_by_id(
         &self,
         certificate_server_id: &str,
@@ -53,7 +53,7 @@ pub trait CertificateApi {
         &self,
         certificate_server_id_params: crate::models::CertificateServerIdParams,
         certificate_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> CertificateApi for CertificateApiClient<C> {
@@ -76,7 +76,7 @@ impl<C: hyper::client::connect::Connect + 'static> CertificateApi for Certificat
     fn delete_certificate_server_by_id(
         &self,
         certificate_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/certificate/server/{CertificateServerId}",
             self.configuration.base_path,
@@ -138,7 +138,7 @@ impl<C: hyper::client::connect::Connect + 'static> CertificateApi for Certificat
         &self,
         certificate_server_id_params: crate::models::CertificateServerIdParams,
         certificate_server_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/certificate/server/{CertificateServerId}",
             self.configuration.base_path,

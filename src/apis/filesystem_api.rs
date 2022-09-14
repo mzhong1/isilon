@@ -39,11 +39,11 @@ pub trait FilesystemApi {
     fn update_settings_access_time(
         &self,
         settings_access_time: crate::models::SettingsAccessTimeExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_character_encodings(
         &self,
         settings_character_encodings: crate::models::SettingsCharacterEncodingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> FilesystemApi for FilesystemApiClient<C> {
@@ -80,7 +80,7 @@ impl<C: hyper::client::connect::Connect + 'static> FilesystemApi for FilesystemA
     fn update_settings_access_time(
         &self,
         settings_access_time: crate::models::SettingsAccessTimeExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/filesystem/settings/access-time",
             self.configuration.base_path
@@ -91,7 +91,7 @@ impl<C: hyper::client::connect::Connect + 'static> FilesystemApi for FilesystemA
     fn update_settings_character_encodings(
         &self,
         settings_character_encodings: crate::models::SettingsCharacterEncodingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/filesystem/settings/character-encodings",
             self.configuration.base_path

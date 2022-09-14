@@ -55,7 +55,7 @@ pub trait DedupeApi {
     fn update_dedupe_settings(
         &self,
         dedupe_settings: crate::models::DedupeSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient<C> {
@@ -147,7 +147,7 @@ impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient
     fn update_dedupe_settings(
         &self,
         dedupe_settings: crate::models::DedupeSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/dedupe/settings",
             self.configuration.base_path

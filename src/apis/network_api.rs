@@ -45,7 +45,7 @@ pub trait NetworkApi {
     fn delete_network_groupnet(
         &self,
         network_groupnet_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_network_dnscache(
         &self,
     ) -> Box<dyn Future<Item = crate::models::NetworkDnscache, Error = Error>>;
@@ -105,16 +105,16 @@ pub trait NetworkApi {
     fn update_network_dnscache(
         &self,
         network_dnscache: crate::models::NetworkDnscacheExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_network_external(
         &self,
         network_external: crate::models::NetworkExternalExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_network_groupnet(
         &self,
         network_groupnet: crate::models::NetworkGroupnet,
         network_groupnet_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> NetworkApi for NetworkApiClient<C> {
@@ -169,7 +169,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkApi for NetworkApiClie
     fn delete_network_groupnet(
         &self,
         network_groupnet_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/network/groupnets/{NetworkGroupnetId}",
             self.configuration.base_path,
@@ -380,7 +380,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkApi for NetworkApiClie
     fn update_network_dnscache(
         &self,
         network_dnscache: crate::models::NetworkDnscacheExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/network/dnscache",
             self.configuration.base_path
@@ -391,7 +391,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkApi for NetworkApiClie
     fn update_network_external(
         &self,
         network_external: crate::models::NetworkExternalExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/network/external",
             self.configuration.base_path
@@ -403,7 +403,7 @@ impl<C: hyper::client::connect::Connect + 'static> NetworkApi for NetworkApiClie
         &self,
         network_groupnet: crate::models::NetworkGroupnet,
         network_groupnet_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/network/groupnets/{NetworkGroupnetId}",
             self.configuration.base_path,

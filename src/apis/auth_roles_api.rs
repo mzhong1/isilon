@@ -44,12 +44,12 @@ pub trait AuthRolesApi {
         &self,
         role_member_id: &str,
         role: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_role_privilege(
         &self,
         role_privilege_id: &str,
         role: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn list_role_members(
         &self,
         role: &str,
@@ -104,7 +104,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthRolesApi for AuthRolesApi
         &self,
         role_member_id: &str,
         role: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/roles/{Role}/members/{RoleMemberId}",
             self.configuration.base_path,
@@ -123,7 +123,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthRolesApi for AuthRolesApi
         &self,
         role_privilege_id: &str,
         role: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/roles/{Role}/privileges/{RolePrivilegeId}",
             self.configuration.base_path,

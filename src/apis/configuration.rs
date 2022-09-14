@@ -210,7 +210,7 @@ impl<C: hyper::client::connect::Connect + 'static> Configuration<C> {
         Ok(())
     }
 
-    pub fn logout(&self) -> Box<dyn Future<Item = (), Error = Error>> {
+    pub fn logout(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let mut headers: HashMap<String, String> = HashMap::new();
         let uri_str = format!("{}/session/1/session", self.base_path);
 

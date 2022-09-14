@@ -41,8 +41,8 @@ pub trait SnapshotSnapshotsApi {
         &self,
         snapshot_lock_id: &str,
         sid: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_snapshot_locks(&self, sid: &str) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_snapshot_locks(&self, sid: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_snapshot_lock(
         &self,
         snapshot_lock_id: &str,
@@ -61,7 +61,7 @@ pub trait SnapshotSnapshotsApi {
         snapshot_lock: crate::models::SnapshotLock,
         snapshot_lock_id: &str,
         sid: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> SnapshotSnapshotsApi
@@ -89,7 +89,7 @@ impl<C: hyper::client::connect::Connect + 'static> SnapshotSnapshotsApi
         &self,
         snapshot_lock_id: &str,
         sid: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/snapshot/snapshots/{Sid}/locks/{SnapshotLockId}",
             self.configuration.base_path,
@@ -104,7 +104,7 @@ impl<C: hyper::client::connect::Connect + 'static> SnapshotSnapshotsApi
         )
     }
 
-    fn delete_snapshot_locks(&self, sid: &str) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_snapshot_locks(&self, sid: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/snapshot/snapshots/{Sid}/locks",
             self.configuration.base_path,
@@ -170,7 +170,7 @@ impl<C: hyper::client::connect::Connect + 'static> SnapshotSnapshotsApi
         snapshot_lock: crate::models::SnapshotLock,
         snapshot_lock_id: &str,
         sid: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/snapshot/snapshots/{Sid}/locks/{SnapshotLockId}",
             self.configuration.base_path,

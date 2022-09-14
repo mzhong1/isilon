@@ -50,20 +50,20 @@ pub trait SyncApi {
         &self,
         local_only: bool,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_sync_policy(
         &self,
         sync_policy_id: &str,
         local_only: bool,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_sync_rule(&self, sync_rule_id: &str) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_sync_rules(&self, _type: &str) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_sync_rule(&self, sync_rule_id: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_sync_rules(&self, _type: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_target_policy(
         &self,
         target_policy_id: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_history_cpu(
         &self,
         begin: i32,
@@ -176,21 +176,21 @@ pub trait SyncApi {
         &self,
         sync_job: crate::models::SyncJob,
         sync_job_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_sync_policy(
         &self,
         sync_policy: crate::models::SyncPolicy,
         sync_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_sync_rule(
         &self,
         sync_rule: crate::models::SyncRule,
         sync_rule_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_sync_settings(
         &self,
         sync_settings: crate::models::SyncSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> {
@@ -254,7 +254,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         local_only: bool,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("local_only", &local_only.to_string())
             .append_pair("force", &force.to_string())
@@ -276,7 +276,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         sync_policy_id: &str,
         local_only: bool,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("local_only", &local_only.to_string())
             .append_pair("force", &force.to_string())
@@ -295,7 +295,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         )
     }
 
-    fn delete_sync_rule(&self, sync_rule_id: &str) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_sync_rule(&self, sync_rule_id: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/rules/{SyncRuleId}",
             self.configuration.base_path,
@@ -309,7 +309,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         )
     }
 
-    fn delete_sync_rules(&self, _type: &str) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_sync_rules(&self, _type: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("type", &_type.to_string())
             .finish();
@@ -329,7 +329,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         target_policy_id: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .finish();
@@ -752,7 +752,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         sync_job: crate::models::SyncJob,
         sync_job_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/jobs/{SyncJobId}",
             self.configuration.base_path,
@@ -765,7 +765,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         sync_policy: crate::models::SyncPolicy,
         sync_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/policies/{SyncPolicyId}",
             self.configuration.base_path,
@@ -778,7 +778,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         &self,
         sync_rule: crate::models::SyncRule,
         sync_rule_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/sync/rules/{SyncRuleId}",
             self.configuration.base_path,
@@ -790,7 +790,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
     fn update_sync_settings(
         &self,
         sync_settings: crate::models::SyncSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!("{}/platform/3/sync/settings", self.configuration.base_path);
         put(self.configuration.borrow(), &uri_str, &sync_settings)
     }

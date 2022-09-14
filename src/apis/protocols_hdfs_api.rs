@@ -41,7 +41,7 @@ pub trait ProtocolsHdfsApi {
         proxyusers_name_member_id: &str,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn list_proxyusers_name_members(
         &self,
         name: &str,
@@ -53,7 +53,7 @@ pub trait ProtocolsHdfsApi {
         proxyusers_name_member_id: &str,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> ProtocolsHdfsApi for ProtocolsHdfsApiClient<C> {
@@ -85,7 +85,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsHdfsApi for Protocol
         proxyusers_name_member_id: &str,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -133,7 +133,7 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsHdfsApi for Protocol
         proxyusers_name_member_id: &str,
         name: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();

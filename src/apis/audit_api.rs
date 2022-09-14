@@ -35,7 +35,7 @@ pub trait AuditApi {
         audit_topic: crate::models::AuditTopicCreateParams,
     ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
     fn delete_audit_topic(&self, audit_topic_id: &str)
-        -> Box<dyn Future<Item = (), Error = Error>>;
+        -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_audit_progress(
         &self,
         lnn: i32,
@@ -61,16 +61,16 @@ pub trait AuditApi {
         &self,
         audit_settings: crate::models::AuditSettingsSettings,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_audit_topic(
         &self,
         audit_topic: crate::models::AuditTopic,
         audit_topic_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_global(
         &self,
         settings_global: crate::models::SettingsGlobalSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> AuditApi for AuditApiClient<C> {
@@ -90,7 +90,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuditApi for AuditApiClient<C
     fn delete_audit_topic(
         &self,
         audit_topic_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/audit/topics/{AuditTopicId}",
             self.configuration.base_path,
@@ -205,7 +205,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuditApi for AuditApiClient<C
         &self,
         audit_settings: crate::models::AuditSettingsSettings,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -220,7 +220,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuditApi for AuditApiClient<C
         &self,
         audit_topic: crate::models::AuditTopic,
         audit_topic_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/audit/topics/{AuditTopicId}",
             self.configuration.base_path,
@@ -232,7 +232,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuditApi for AuditApiClient<C
     fn update_settings_global(
         &self,
         settings_global: crate::models::SettingsGlobalSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/audit/settings/global",
             self.configuration.base_path

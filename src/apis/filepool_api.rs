@@ -37,7 +37,7 @@ pub trait FilepoolApi {
     fn delete_filepool_policy(
         &self,
         filepool_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_filepool_default_policy(
         &self,
     ) -> Box<dyn Future<Item = crate::models::FilepoolDefaultPolicy, Error = Error>>;
@@ -58,12 +58,12 @@ pub trait FilepoolApi {
     fn update_filepool_default_policy(
         &self,
         filepool_default_policy: crate::models::FilepoolDefaultPolicyExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_filepool_policy(
         &self,
         filepool_policy: crate::models::FilepoolPolicy,
         filepool_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> FilepoolApi for FilepoolApiClient<C> {
@@ -86,7 +86,7 @@ impl<C: hyper::client::connect::Connect + 'static> FilepoolApi for FilepoolApiCl
     fn delete_filepool_policy(
         &self,
         filepool_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/filepool/policies/{FilepoolPolicyId}",
             self.configuration.base_path,
@@ -182,7 +182,7 @@ impl<C: hyper::client::connect::Connect + 'static> FilepoolApi for FilepoolApiCl
     fn update_filepool_default_policy(
         &self,
         filepool_default_policy: crate::models::FilepoolDefaultPolicyExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/filepool/default-policy",
             self.configuration.base_path
@@ -198,7 +198,7 @@ impl<C: hyper::client::connect::Connect + 'static> FilepoolApi for FilepoolApiCl
         &self,
         filepool_policy: crate::models::FilepoolPolicy,
         filepool_policy_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/filepool/policies/{FilepoolPolicyId}",
             self.configuration.base_path,

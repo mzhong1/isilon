@@ -106,33 +106,33 @@ pub trait AuthApi {
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_auth_groups(
         &self,
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
-    fn delete_auth_role(&self, auth_role_id: &str) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_auth_role(&self, auth_role_id: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_auth_user(
         &self,
         auth_user_id: &str,
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_auth_users(
         &self,
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_mapping_identities(
         &self,
         filter: &str,
         zone: &str,
         remove: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_mapping_identity(
         &self,
         mapping_identity_id: &str,
@@ -140,39 +140,39 @@ pub trait AuthApi {
         var_2way: bool,
         target: &str,
         remove: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_providers_ads_by_id(
         &self,
         providers_ads_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_providers_file_by_id(
         &self,
         providers_file_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_providers_krb5_by_id(
         &self,
         providers_krb5_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_providers_ldap_by_id(
         &self,
         providers_ldap_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_providers_local_by_id(
         &self,
         providers_local_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_providers_nis_by_id(
         &self,
         providers_nis_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_settings_krb5_domain(
         &self,
         settings_krb5_domain_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_settings_krb5_realm(
         &self,
         settings_krb5_realm_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_auth_access_user(
         &self,
         auth_access_user: &str,
@@ -388,16 +388,16 @@ pub trait AuthApi {
         force: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_auth_log_level(
         &self,
         auth_log_level: crate::models::AuthLogLevelExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_auth_role(
         &self,
         auth_role: crate::models::AuthRole,
         auth_role_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_auth_user(
         &self,
         auth_user: crate::models::AuthUser,
@@ -405,77 +405,77 @@ pub trait AuthApi {
         force: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_mapping_import(
         &self,
         mapping_import: crate::models::MappingImport,
         zone: &str,
         replace: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_mapping_users_rules(
         &self,
         mapping_users_rules: crate::models::MappingUsersRulesExtended,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_providers_ads_by_id(
         &self,
         providers_ads_id_params: crate::models::ProvidersAdsIdParams,
         providers_ads_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_providers_file_by_id(
         &self,
         providers_file_id_params: crate::models::ProvidersFileIdParams,
         providers_file_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_providers_krb5_by_id(
         &self,
         providers_krb5_id_params: crate::models::ProvidersKrb5IdParams,
         providers_krb5_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_providers_ldap_by_id(
         &self,
         providers_ldap_id_params: crate::models::ProvidersLdapIdParams,
         providers_ldap_id: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_providers_local_by_id(
         &self,
         providers_local_id_params: crate::models::ProvidersLocalIdParams,
         providers_local_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_providers_nis_by_id(
         &self,
         providers_nis_id_params: crate::models::ProvidersNisIdParams,
         providers_nis_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_acls(
         &self,
         settings_acls: crate::models::SettingsAclsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_global(
         &self,
         settings_global: crate::models::SettingsGlobalGlobalSettings,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_krb5_defaults(
         &self,
         settings_krb5_defaults: crate::models::SettingsKrb5DefaultsKrb5Settings,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_krb5_domain(
         &self,
         settings_krb5_domain: crate::models::SettingsKrb5Domain,
         settings_krb5_domain_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_krb5_realm(
         &self,
         settings_krb5_realm: crate::models::SettingsKrb5Realm,
         settings_krb5_realm_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_settings_mapping(
         &self,
         settings_mapping: crate::models::SettingsMappingMappingSettings,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> {
@@ -744,7 +744,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("cached", &cached.to_string())
             .append_pair("zone", &zone.to_string())
@@ -769,7 +769,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("cached", &cached.to_string())
             .append_pair("zone", &zone.to_string())
@@ -787,7 +787,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         )
     }
 
-    fn delete_auth_role(&self, auth_role_id: &str) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_auth_role(&self, auth_role_id: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/roles/{AuthRoleId}",
             self.configuration.base_path,
@@ -807,7 +807,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("cached", &cached.to_string())
             .append_pair("zone", &zone.to_string())
@@ -832,7 +832,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         cached: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("cached", &cached.to_string())
             .append_pair("zone", &zone.to_string())
@@ -855,7 +855,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         filter: &str,
         zone: &str,
         remove: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("filter", &filter.to_string())
             .append_pair("zone", &zone.to_string())
@@ -880,7 +880,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         var_2way: bool,
         target: &str,
         remove: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .append_pair("2way", &var_2way.to_string())
@@ -904,7 +904,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_providers_ads_by_id(
         &self,
         providers_ads_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/auth/providers/ads/{ProvidersAdsId}",
             self.configuration.base_path,
@@ -921,7 +921,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_providers_file_by_id(
         &self,
         providers_file_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/providers/file/{ProvidersFileId}",
             self.configuration.base_path,
@@ -938,7 +938,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_providers_krb5_by_id(
         &self,
         providers_krb5_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/auth/providers/krb5/{ProvidersKrb5Id}",
             self.configuration.base_path,
@@ -955,7 +955,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_providers_ldap_by_id(
         &self,
         providers_ldap_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/4/auth/providers/ldap/{ProvidersLdapId}",
             self.configuration.base_path,
@@ -972,7 +972,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_providers_local_by_id(
         &self,
         providers_local_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/providers/local/{ProvidersLocalId}",
             self.configuration.base_path,
@@ -989,7 +989,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_providers_nis_by_id(
         &self,
         providers_nis_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/auth/providers/nis/{ProvidersNisId}",
             self.configuration.base_path,
@@ -1006,7 +1006,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_settings_krb5_domain(
         &self,
         settings_krb5_domain_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/settings/krb5/domains/{SettingsKrb5DomainId}",
             self.configuration.base_path,
@@ -1023,7 +1023,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn delete_settings_krb5_realm(
         &self,
         settings_krb5_realm_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/auth/settings/krb5/realms/{SettingsKrb5RealmId}",
             self.configuration.base_path,
@@ -1902,7 +1902,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         force: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .append_pair("zone", &zone.to_string())
@@ -1920,7 +1920,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn update_auth_log_level(
         &self,
         auth_log_level: crate::models::AuthLogLevelExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!("{}/platform/3/auth/log-level", self.configuration.base_path);
         put(self.configuration.borrow(), &uri, &auth_log_level)
     }
@@ -1929,7 +1929,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         auth_role: crate::models::AuthRole,
         auth_role_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/auth/roles/{AuthRoleId}",
             self.configuration.base_path,
@@ -1945,7 +1945,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         force: bool,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .append_pair("zone", &zone.to_string())
@@ -1965,7 +1965,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         mapping_import: crate::models::MappingImport,
         zone: &str,
         replace: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .append_pair("replace", &replace.to_string())
@@ -1981,7 +1981,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         mapping_users_rules: crate::models::MappingUsersRulesExtended,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -1996,7 +1996,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         providers_ads_id_params: crate::models::ProvidersAdsIdParams,
         providers_ads_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/auth/providers/ads/{ProvidersAdsId}",
             self.configuration.base_path,
@@ -2009,7 +2009,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         providers_file_id_params: crate::models::ProvidersFileIdParams,
         providers_file_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/auth/providers/file/{ProvidersFileId}",
             self.configuration.base_path,
@@ -2022,7 +2022,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         providers_krb5_id_params: crate::models::ProvidersKrb5IdParams,
         providers_krb5_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/auth/providers/krb5/{ProvidersKrb5Id}",
             self.configuration.base_path,
@@ -2036,7 +2036,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         providers_ldap_id_params: crate::models::ProvidersLdapIdParams,
         providers_ldap_id: &str,
         force: bool,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("force", &force.to_string())
             .finish();
@@ -2053,7 +2053,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         providers_local_id_params: crate::models::ProvidersLocalIdParams,
         providers_local_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/auth/providers/local/{ProvidersLocalId}",
             self.configuration.base_path,
@@ -2070,7 +2070,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         providers_nis_id_params: crate::models::ProvidersNisIdParams,
         providers_nis_id: &str,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/auth/providers/nis/{ProvidersNisId}",
             self.configuration.base_path,
@@ -2082,7 +2082,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn update_settings_acls(
         &self,
         settings_acls: crate::models::SettingsAclsExtended,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/auth/settings/acls",
             self.configuration.base_path
@@ -2094,7 +2094,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         settings_global: crate::models::SettingsGlobalGlobalSettings,
         zone: &str,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
@@ -2108,7 +2108,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
     fn update_settings_krb5_defaults(
         &self,
         settings_krb5_defaults: crate::models::SettingsKrb5DefaultsKrb5Settings,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/auth/settings/krb5/defaults",
             self.configuration.base_path
@@ -2120,7 +2120,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         settings_krb5_domain: crate::models::SettingsKrb5Domain,
         settings_krb5_domain_id: &str,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/auth/settings/krb5/domains/{SettingsKrb5DomainId}",
             self.configuration.base_path,
@@ -2133,7 +2133,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         settings_krb5_realm: crate::models::SettingsKrb5Realm,
         settings_krb5_realm_id: &str,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/1/auth/settings/krb5/realms/{SettingsKrb5RealmId}",
             self.configuration.base_path,
@@ -2146,7 +2146,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         &self,
         settings_mapping: crate::models::SettingsMappingMappingSettings,
         zone: &str,
-    ) -> Box<Future<Item = (), Error = Error>> {
+    ) -> Box<Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();

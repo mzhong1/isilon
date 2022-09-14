@@ -120,36 +120,36 @@ pub trait ClusterApi {
     fn update_cluster_email(
         &self,
         cluster_email: crate::models::ClusterEmailExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cluster_node(
         &self,
         cluster_node: crate::models::ClusterNode,
         cluster_node_id: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cluster_owner(
         &self,
         cluster_owner: crate::models::ClusterOwner,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cluster_time(
         &self,
         cluster_time: crate::models::ClusterTimeExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_cluster_timezone(
         &self,
         cluster_timezone: crate::models::ClusterTimezoneExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_diagnostics_gather_settings(
         &self,
         diagnostics_gather_settings: crate::models::DiagnosticsGatherSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_diagnostics_netlogger_settings(
         &self,
         diagnostics_netlogger_settings: crate::models::DiagnosticsNetloggerSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_timezone_settings(
         &self,
         timezone_settings: crate::models::TimezoneRegionTimezone,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClient<C> {
@@ -559,7 +559,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_cluster_email(
         &self,
         cluster_email: crate::models::ClusterEmailExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!("{}/platform/1/cluster/email", self.configuration.base_path);
         put(self.configuration.borrow(), &uri, &cluster_email)
     }
@@ -568,7 +568,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
         &self,
         cluster_node: crate::models::ClusterNode,
         cluster_node_id: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/5/cluster/nodes/{ClusterNodeId}",
             self.configuration.base_path,
@@ -580,7 +580,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_cluster_owner(
         &self,
         cluster_owner: crate::models::ClusterOwner,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!("{}/platform/1/cluster/owner", self.configuration.base_path);
         put(self.configuration.borrow(), &uri, &cluster_owner)
     }
@@ -588,7 +588,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_cluster_time(
         &self,
         cluster_time: crate::models::ClusterTimeExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!("{}/platform/3/cluster/time", self.configuration.base_path);
         put(self.configuration.borrow(), &uri, &cluster_time)
     }
@@ -596,7 +596,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_cluster_timezone(
         &self,
         cluster_timezone: crate::models::ClusterTimezoneExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/cluster/timezone",
             self.configuration.base_path
@@ -607,7 +607,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_diagnostics_gather_settings(
         &self,
         diagnostics_gather_settings: crate::models::DiagnosticsGatherSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/cluster/diagnostics/gather/settings",
             self.configuration.base_path
@@ -622,7 +622,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_diagnostics_netlogger_settings(
         &self,
         diagnostics_netlogger_settings: crate::models::DiagnosticsNetloggerSettings,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/cluster/diagnostics/netlogger/settings",
             self.configuration.base_path
@@ -637,7 +637,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClie
     fn update_timezone_settings(
         &self,
         timezone_settings: crate::models::TimezoneRegionTimezone,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri = format!(
             "{}/platform/3/cluster/timezone/settings",
             self.configuration.base_path

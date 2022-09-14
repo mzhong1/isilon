@@ -52,11 +52,11 @@ pub trait WormApi {
         &self,
         worm_domain: crate::models::WormDomain,
         worm_domain_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_worm_settings(
         &self,
         worm_settings: crate::models::WormSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> WormApi for WormApiClient<C> {
@@ -131,7 +131,7 @@ impl<C: hyper::client::connect::Connect + 'static> WormApi for WormApiClient<C> 
         &self,
         worm_domain: crate::models::WormDomain,
         worm_domain_id: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/worm/domains/{WormDomainId}",
             self.configuration.base_path,
@@ -143,7 +143,7 @@ impl<C: hyper::client::connect::Connect + 'static> WormApi for WormApiClient<C> 
     fn update_worm_settings(
         &self,
         worm_settings: crate::models::WormSettingsExtended,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!("{}/platform/1/worm/settings", self.configuration.base_path);
         put(self.configuration.borrow(), &uri_str, &worm_settings)
     }

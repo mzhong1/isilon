@@ -34,7 +34,7 @@ pub trait ZonesApi {
         &self,
         zone: crate::models::ZoneCreateParams,
     ) -> Box<dyn Future<Item = crate::models::CreateResponse, Error = Error>>;
-    fn delete_zone(&self, zone_id: i32) -> Box<dyn Future<Item = (), Error = Error>>;
+    fn delete_zone(&self, zone_id: i32) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_zone(&self, zone_id: i32)
         -> Box<dyn Future<Item = crate::models::Zones, Error = Error>>;
     fn list_zones(&self) -> Box<dyn Future<Item = crate::models::ZonesExtended, Error = Error>>;
@@ -42,7 +42,7 @@ pub trait ZonesApi {
         &self,
         zone: crate::models::Zone,
         zone_id: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C> {
@@ -59,7 +59,7 @@ impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C
         )
     }
 
-    fn delete_zone(&self, zone_id: i32) -> Box<dyn Future<Item = (), Error = Error>> {
+    fn delete_zone(&self, zone_id: i32) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/zones/{ZoneId}",
             self.configuration.base_path,
@@ -104,7 +104,7 @@ impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C
         &self,
         zone: crate::models::Zone,
         zone_id: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/zones/{ZoneId}",
             self.configuration.base_path,

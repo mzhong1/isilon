@@ -170,22 +170,22 @@ pub trait ClusterNodesApi {
         &self,
         node_driveconfig: crate::models::NodeDriveconfigExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_node_state_readonly(
         &self,
         node_state_readonly: crate::models::NodeStateReadonlyExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_node_state_servicelight(
         &self,
         node_state_servicelight: crate::models::NodeStateServicelightExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn update_node_state_smartfail(
         &self,
         node_state_smartfail: crate::models::NodeStateSmartfailExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> ClusterNodesApi for ClusterNodesApiClient<C> {
@@ -756,7 +756,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterNodesApi for ClusterNo
         &self,
         node_driveconfig: crate::models::NodeDriveconfigExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/5/cluster/nodes/{Lnn}/driveconfig",
             self.configuration.base_path,
@@ -770,7 +770,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterNodesApi for ClusterNo
         &self,
         node_state_readonly: crate::models::NodeStateReadonlyExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/nodes/{Lnn}/state/readonly",
             self.configuration.base_path,
@@ -784,7 +784,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterNodesApi for ClusterNo
         &self,
         node_state_servicelight: crate::models::NodeStateServicelightExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/nodes/{Lnn}/state/servicelight",
             self.configuration.base_path,
@@ -802,7 +802,7 @@ impl<C: hyper::client::connect::Connect + 'static> ClusterNodesApi for ClusterNo
         &self,
         node_state_smartfail: crate::models::NodeStateSmartfailExtended,
         lnn: i32,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/cluster/nodes/{Lnn}/state/smartfail",
             self.configuration.base_path,

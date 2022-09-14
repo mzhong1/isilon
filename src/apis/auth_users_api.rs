@@ -43,7 +43,7 @@ pub trait AuthUsersApi {
         user: &str,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn list_user_member_of(
         &self,
         user: &str,
@@ -56,7 +56,7 @@ pub trait AuthUsersApi {
         user_change_password: crate::models::UserChangePassword,
         user: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>>;
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
 impl<C: hyper::client::connect::Connect + 'static> AuthUsersApi for AuthUsersApiClient<C> {
@@ -92,7 +92,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthUsersApi for AuthUsersApi
         user: &str,
         zone: &str,
         provider: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .append_pair("provider", &provider.to_string())
@@ -144,7 +144,7 @@ impl<C: hyper::client::connect::Connect + 'static> AuthUsersApi for AuthUsersApi
         user_change_password: crate::models::UserChangePassword,
         user: &str,
         zone: &str,
-    ) -> Box<dyn Future<Item = (), Error = Error>> {
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("zone", &zone.to_string())
             .finish();
