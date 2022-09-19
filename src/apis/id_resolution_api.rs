@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct IdResolutionApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> IdResolutionApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> IdResolutionApiClient<C> {
         IdResolutionApiClient {
@@ -44,6 +44,7 @@ pub trait IdResolutionApi {
     ) -> Box<dyn Future<Output = Result<crate::models::IdResolutionPathsExtended, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> IdResolutionApi for IdResolutionApiClient<C> {
     fn get_id_resolution_path(
         &self,

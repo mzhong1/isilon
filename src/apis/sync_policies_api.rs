@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct SyncPoliciesApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> SyncPoliciesApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> SyncPoliciesApiClient<C> {
         SyncPoliciesApiClient {
@@ -36,7 +36,7 @@ pub trait SyncPoliciesApi {
         policy: &str,
     ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> SyncPoliciesApi for SyncPoliciesApiClient<C> {
     fn create_policy_reset_item(
         &self,

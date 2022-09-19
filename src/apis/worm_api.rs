@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct WormApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> WormApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> WormApiClient<C> {
         WormApiClient {
@@ -59,6 +59,7 @@ pub trait WormApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> WormApi for WormApiClient<C> {
     fn create_worm_domain(
         &self,

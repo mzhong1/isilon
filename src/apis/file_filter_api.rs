@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct FileFilterApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> FileFilterApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> FileFilterApiClient<C> {
         FileFilterApiClient {
@@ -41,6 +41,7 @@ pub trait FileFilterApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> FileFilterApi for FileFilterApiClient<C> {
     fn get_file_filter_settings(
         &self,

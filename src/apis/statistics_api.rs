@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct StatisticsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> StatisticsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> StatisticsApiClient<C> {
         StatisticsApiClient {
@@ -77,7 +77,7 @@ pub trait StatisticsApi {
     fn get_statistics_operations(
         &self,
         protocols: Vec<String>,
-    ) -> Box<dyn Future<Output = Result<crate::models::StatisticsOperations,  Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::StatisticsOperations, Error>>>;
     fn get_statistics_protocols(
         &self,
         _type: &str,
@@ -159,7 +159,7 @@ pub trait StatisticsApi {
         system_names: &str,
     ) -> Box<dyn Future<Output = Result<crate::models::SummaryWorkload, Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> StatisticsApi for StatisticsApiClient<C> {
     fn get_statistics_current(
         &self,
@@ -294,7 +294,7 @@ impl<C: hyper::client::connect::Connect + 'static> StatisticsApi for StatisticsA
     fn get_statistics_operations(
         &self,
         protocols: Vec<String>,
-    ) -> Box<dyn Future<Output = Result<crate::models::StatisticsOperations,  Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StatisticsOperations, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("protocols", &protocols.join(",").to_string())
             .finish();

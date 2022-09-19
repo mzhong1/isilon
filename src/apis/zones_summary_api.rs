@@ -13,14 +13,15 @@ use std::rc::Rc;
 
 use futures;
 use futures::Future;
-use hyper;
 
-use super::{configuration, query, Error};
+use super::{configuration, Error};
 
+#[cfg(feature = "client")]
 pub struct ZonesSummaryApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> ZonesSummaryApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> ZonesSummaryApiClient<C> {
         ZonesSummaryApiClient {
@@ -40,6 +41,7 @@ pub trait ZonesSummaryApi {
     ) -> Box<dyn Future<Output = Result<crate::models::ZonesSummary, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> ZonesSummaryApi for ZonesSummaryApiClient<C> {
     fn get_zones_summary(
         &self,

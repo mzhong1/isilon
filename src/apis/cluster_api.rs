@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct ClusterApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> ClusterApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> ClusterApiClient<C> {
         ClusterApiClient {
@@ -78,8 +78,9 @@ pub trait ClusterApi {
     fn get_cluster_statfs(
         &self,
     ) -> Box<dyn Future<Output = Result<crate::models::ClusterStatfs, Error>>>;
-    fn get_cluster_time(&self)
-        -> Box<dyn Future<Output = Result<crate::models::ClusterTime, Error>>>;
+    fn get_cluster_time(
+        &self,
+    ) -> Box<dyn Future<Output = Result<crate::models::ClusterTime, Error>>>;
     fn get_cluster_timezone(
         &self,
     ) -> Box<dyn Future<Output = Result<crate::models::ClusterTimezone, Error>>>;
@@ -152,6 +153,7 @@ pub trait ClusterApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> ClusterApi for ClusterApiClient<C> {
     fn create_cluster_add_node_item(
         &self,

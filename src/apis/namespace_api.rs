@@ -16,12 +16,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, custom_query, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct NamespaceApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> NamespaceApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> NamespaceApiClient<C> {
         NamespaceApiClient {
@@ -185,6 +185,7 @@ pub trait NamespaceApi {
     ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> NamespaceApi for NamespaceApiClient<C> {
     fn copy_directory(
         &self,
@@ -492,7 +493,6 @@ impl<C: hyper::client::connect::Connect + 'static> NamespaceApi for NamespaceApi
         directory_metadata_path: &str,
         metadata: bool,
     ) -> Box<dyn Future<Output = Result<crate::models::NamespaceMetadataList, Error>>> {
-
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("metadata", &metadata.to_string())
             .finish();

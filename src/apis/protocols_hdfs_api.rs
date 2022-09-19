@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct ProtocolsHdfsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> ProtocolsHdfsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> ProtocolsHdfsApiClient<C> {
         ProtocolsHdfsApiClient {
@@ -56,6 +56,7 @@ pub trait ProtocolsHdfsApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> ProtocolsHdfsApi for ProtocolsHdfsApiClient<C> {
     fn create_proxyusers_name_member(
         &self,

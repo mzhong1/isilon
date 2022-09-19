@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct SyncReportsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> SyncReportsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> SyncReportsApiClient<C> {
         SyncReportsApiClient {
@@ -46,7 +46,7 @@ pub trait SyncReportsApi {
         dir: &str,
     ) -> Box<dyn Future<Output = Result<crate::models::ReportSubreportsExtended, Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> SyncReportsApi for SyncReportsApiClient<C> {
     fn get_report_subreport(
         &self,

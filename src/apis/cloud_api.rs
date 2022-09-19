@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct CloudApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> CloudApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> CloudApiClient<C> {
         CloudApiClient {
@@ -72,8 +72,10 @@ pub trait CloudApi {
         cloud_pool_id: &str,
         acknowledge_force_delete: &str,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
-    fn delete_cloud_proxy(&self, cloud_proxy_id: &str)
-        -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_cloud_proxy(
+        &self,
+        cloud_proxy_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_settings_reporting_eula(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_cloud_access_guid(
         &self,
@@ -167,6 +169,7 @@ pub trait CloudApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> CloudApi for CloudApiClient<C> {
     fn create_cloud_access_item(
         &self,

@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct JobApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> JobApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> JobApiClient<C> {
         JobApiClient {
@@ -38,7 +38,8 @@ pub trait JobApi {
         &self,
         job_policy: crate::models::JobPolicyCreateParams,
     ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
-    fn delete_job_policy(&self, job_policy_id: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_job_policy(&self, job_policy_id: &str)
+        -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_job_events(
         &self,
         begin: i32,
@@ -127,6 +128,7 @@ pub trait JobApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
     fn create_job_job(
         &self,
@@ -154,7 +156,10 @@ impl<C: hyper::client::connect::Connect + 'static> JobApi for JobApiClient<C> {
         )
     }
 
-    fn delete_job_policy(&self, job_policy_id: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
+    fn delete_job_policy(
+        &self,
+        job_policy_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/1/job/policies/{JobPolicyId}",
             self.configuration.base_path,

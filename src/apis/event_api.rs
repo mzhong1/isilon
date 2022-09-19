@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct EventApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> EventApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> EventApiClient<C> {
         EventApiClient {
@@ -152,6 +152,7 @@ pub trait EventApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> EventApi for EventApiClient<C> {
     fn create_event_alert_condition(
         &self,

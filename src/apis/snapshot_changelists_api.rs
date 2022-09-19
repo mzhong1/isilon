@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct SnapshotChangelistsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> SnapshotChangelistsApiClient<C> {
     pub fn new(
         configuration: Rc<configuration::Configuration<C>>,
@@ -47,6 +47,7 @@ pub trait SnapshotChangelistsApi {
     ) -> Box<dyn Future<Output = Result<crate::models::ChangelistLinsExtended, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> SnapshotChangelistsApi
     for SnapshotChangelistsApiClient<C>
 {

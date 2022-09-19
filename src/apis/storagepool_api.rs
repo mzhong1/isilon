@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct StoragepoolApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> StoragepoolApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> StoragepoolApiClient<C> {
         StoragepoolApiClient {
@@ -36,7 +36,7 @@ pub trait StoragepoolApi {
         assess: bool,
     ) -> Box<
         dyn Future<
-            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>,
         >,
     >;
     fn create_compatibilities_ssd_active_item(
@@ -45,7 +45,7 @@ pub trait StoragepoolApi {
         assess: bool,
     ) -> Box<
         dyn Future<
-            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>,
         >,
     >;
     fn create_storagepool_nodepool(
@@ -150,7 +150,7 @@ pub trait StoragepoolApi {
         storagepool_tier_id: &str,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for StoragepoolApiClient<C> {
     fn create_compatibilities_class_active_item(
         &self,
@@ -158,7 +158,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
         assess: bool,
     ) -> Box<
         dyn Future<
-            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>,
         >,
     > {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
@@ -182,7 +182,7 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
         assess: bool,
     ) -> Box<
         dyn Future<
-            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>
+            Output = Result<crate::models::CreateCompatibilitiesClassActiveItemResponse, Error>,
         >,
     > {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
@@ -468,7 +468,8 @@ impl<C: hyper::client::connect::Connect + 'static> StoragepoolApi for Storagepoo
     fn get_storagepool_suggested_protection_nid(
         &self,
         storagepool_suggested_protection_nid: &str,
-    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolSuggestedProtection, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::StoragepoolSuggestedProtection, Error>>>
+    {
         let uri_str = format!(
             "{}/platform/3/storagepool/suggested-protection/{StoragepoolSuggestedProtectionNid}",
             self.configuration.base_path,

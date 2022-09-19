@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct QuotaApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> QuotaApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> QuotaApiClient<C> {
         QuotaApiClient {
@@ -47,8 +47,10 @@ pub trait QuotaApi {
         &self,
         settings_notification: crate::models::QuotaNotificationCreateParams,
     ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
-    fn delete_quota_quota(&self, quota_quota_id: &str)
-        -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_quota_quota(
+        &self,
+        quota_quota_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_quota_quotas(
         &self,
         enforced: bool,
@@ -153,7 +155,7 @@ pub trait QuotaApi {
         settings_reports: crate::models::SettingsReportsExtended,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> QuotaApi for QuotaApiClient<C> {
     fn create_quota_quota(
         &self,

@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct SnapshotApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> SnapshotApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> SnapshotApiClient<C> {
         SnapshotApiClient {
@@ -173,6 +173,7 @@ pub trait SnapshotApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> SnapshotApi for SnapshotApiClient<C> {
     fn create_snapshot_alias(
         &self,
@@ -210,7 +211,8 @@ impl<C: hyper::client::connect::Connect + 'static> SnapshotApi for SnapshotApiCl
     fn create_snapshot_repstate(
         &self,
         snapshot_repstate: crate::models::SnapshotRepstates,
-    ) -> Box<dyn Future<Output = Result<crate::models::CreateSnapshotRepstateResponse, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateSnapshotRepstateResponse, Error>>>
+    {
         let uri_str = format!(
             "{}/platform/1/snapshot/repstates",
             self.configuration.base_path
@@ -226,7 +228,8 @@ impl<C: hyper::client::connect::Connect + 'static> SnapshotApi for SnapshotApiCl
     fn create_snapshot_schedule(
         &self,
         snapshot_schedule: crate::models::SnapshotScheduleCreateParams,
-    ) -> Box<dyn Future<Output = Result<crate::models::CreateSnapshotScheduleResponse, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateSnapshotScheduleResponse, Error>>>
+    {
         let uri_str = format!(
             "{}/platform/3/snapshot/schedules",
             self.configuration.base_path

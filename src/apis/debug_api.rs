@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct DebugApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> DebugApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> DebugApiClient<C> {
         DebugApiClient {
@@ -31,9 +31,11 @@ impl<C: hyper::client::connect::Connect> DebugApiClient<C> {
 
 pub trait DebugApi {
     fn delete_debug_stats(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
-    fn get_debug_stats(&self) -> Box<dyn Future<Output = Result<crate::models::DebugStats, Error>>>;
+    fn get_debug_stats(&self)
+        -> Box<dyn Future<Output = Result<crate::models::DebugStats, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> DebugApi for DebugApiClient<C> {
     fn delete_debug_stats(&self) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!("{}/platform/1/debug/stats", self.configuration.base_path);
@@ -45,7 +47,9 @@ impl<C: hyper::client::connect::Connect + 'static> DebugApi for DebugApiClient<C
         )
     }
 
-    fn get_debug_stats(&self) -> Box<dyn Future<Output = Result<crate::models::DebugStats, Error>>> {
+    fn get_debug_stats(
+        &self,
+    ) -> Box<dyn Future<Output = Result<crate::models::DebugStats, Error>>> {
         let uri_str = format!("{}/platform/1/debug/stats", self.configuration.base_path);
         query(
             self.configuration.borrow(),

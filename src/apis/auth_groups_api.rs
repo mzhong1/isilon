@@ -11,15 +11,16 @@
 use std::borrow::Borrow;
 use std::rc::Rc;
 
-use super::{configuration, query, Error};
+use super::{configuration, Error};
 use futures;
 use futures::Future;
 use hyper;
 
+#[cfg(feature = "client")]
 pub struct AuthGroupsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AuthGroupsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AuthGroupsApiClient<C> {
         AuthGroupsApiClient {
@@ -54,6 +55,7 @@ pub trait AuthGroupsApi {
     ) -> Box<dyn Future<Output = Result<crate::models::GroupMembers, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AuthGroupsApi for AuthGroupsApiClient<C> {
     fn create_group_member(
         &self,

@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct DedupeApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> DedupeApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> DedupeApiClient<C> {
         DedupeApiClient {
@@ -58,6 +58,7 @@ pub trait DedupeApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> DedupeApi for DedupeApiClient<C> {
     fn get_dedupe_dedupe_summary(
         &self,

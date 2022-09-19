@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct AuthRolesApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AuthRolesApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AuthRolesApiClient<C> {
         AuthRolesApiClient {
@@ -61,6 +61,7 @@ pub trait AuthRolesApi {
     ) -> Box<dyn Future<Output = Result<crate::models::RolePrivileges, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AuthRolesApi for AuthRolesApiClient<C> {
     fn create_role_member(
         &self,

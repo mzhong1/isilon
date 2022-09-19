@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct FsaApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> FsaApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> FsaApiClient<C> {
         FsaApiClient {
@@ -30,7 +30,8 @@ impl<C: hyper::client::connect::Connect> FsaApiClient<C> {
 }
 
 pub trait FsaApi {
-    fn delete_fsa_result(&self, fsa_result_id: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_fsa_result(&self, fsa_result_id: &str)
+        -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_fsa_settings(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_fsa_result(
         &self,
@@ -54,8 +55,12 @@ pub trait FsaApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> FsaApi for FsaApiClient<C> {
-    fn delete_fsa_result(&self, fsa_result_id: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
+    fn delete_fsa_result(
+        &self,
+        fsa_result_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/fsa/results/{FsaResultId}",
             self.configuration.base_path,

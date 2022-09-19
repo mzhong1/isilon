@@ -1,8 +1,8 @@
 use std::rc::Rc;
 
-use super::configuration::Configuration;
 use hyper;
 
+#[cfg(feature = "client")]
 pub struct APIClient<C: hyper::client::connect::Connect> {
     configuration: Rc<Configuration<C>>,
     antivirus_api: Box<dyn crate::apis::AntivirusApi>,
@@ -56,6 +56,7 @@ pub struct APIClient<C: hyper::client::connect::Connect> {
     zones_summary_api: Box<dyn crate::apis::ZonesSummaryApi>,
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> APIClient<C> {
     pub fn new(configuration: Configuration<C>) -> APIClient<C> {
         let rc = Rc::new(configuration);

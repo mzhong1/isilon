@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct LicenseApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> LicenseApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> LicenseApiClient<C> {
         LicenseApiClient {
@@ -50,6 +50,7 @@ pub trait LicenseApi {
     ) -> Box<dyn Future<Output = Result<crate::models::LicenseLicensesExtended, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> LicenseApi for LicenseApiClient<C> {
     fn create_license_license(
         &self,

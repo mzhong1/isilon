@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct QuotaQuotasApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> QuotaQuotasApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> QuotaQuotasApiClient<C> {
         QuotaQuotasApiClient {
@@ -63,6 +63,7 @@ pub trait QuotaQuotasApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> QuotaQuotasApi for QuotaQuotasApiClient<C> {
     fn create_quota_notification(
         &self,

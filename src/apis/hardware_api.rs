@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct HardwareApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> HardwareApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> HardwareApiClient<C> {
         HardwareApiClient {
@@ -76,6 +76,7 @@ pub trait HardwareApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> HardwareApi for HardwareApiClient<C> {
     fn create_hardware_tape_name(
         &self,
@@ -85,7 +86,8 @@ impl<C: hyper::client::connect::Connect + 'static> HardwareApi for HardwareApiCl
         port: i32,
         timeout: f32,
         reconcile: bool,
-    ) -> Box<dyn Future<Output = Result<crate::models::CreateHardwareTapeNameResponse, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateHardwareTapeNameResponse, Error>>>
+    {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("lnn", &lnn.to_string())
             .append_pair("port", &port.to_string())

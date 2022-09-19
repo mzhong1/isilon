@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct ProtocolsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> ProtocolsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> ProtocolsApiClient<C> {
         ProtocolsApiClient {
@@ -166,7 +166,8 @@ pub trait ProtocolsApi {
         zone: &str,
         refresh: bool,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
-    fn delete_ntp_server(&self, ntp_server_id: &str) -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_ntp_server(&self, ntp_server_id: &str)
+        -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_ntp_servers(&self) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_smb_log_level_filter(
         &self,
@@ -180,8 +181,10 @@ pub trait ProtocolsApi {
         &self,
         smb_openfile_id: &str,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
-    fn delete_smb_session(&self, smb_session_id: &str)
-        -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_smb_session(
+        &self,
+        smb_session_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn delete_smb_sessions_computer_user(
         &self,
         smb_sessions_computer_user: &str,
@@ -198,8 +201,9 @@ pub trait ProtocolsApi {
         swift_account_id: &str,
         zone: &str,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
-    fn get_ftp_settings(&self)
-        -> Box<dyn Future<Output = Result<crate::models::FtpSettings, Error>>>;
+    fn get_ftp_settings(
+        &self,
+    ) -> Box<dyn Future<Output = Result<crate::models::FtpSettings, Error>>>;
     fn get_hdfs_log_level(
         &self,
     ) -> Box<dyn Future<Output = Result<crate::models::HdfsLogLevel, Error>>>;
@@ -385,8 +389,9 @@ pub trait ProtocolsApi {
         &self,
         ntp_server_id: &str,
     ) -> Box<dyn Future<Output = Result<crate::models::NtpServers, Error>>>;
-    fn get_ntp_settings(&self)
-        -> Box<dyn Future<Output = Result<crate::models::NtpSettings, Error>>>;
+    fn get_ntp_settings(
+        &self,
+    ) -> Box<dyn Future<Output = Result<crate::models::NtpSettings, Error>>>;
     fn get_smb_log_level(
         &self,
     ) -> Box<dyn Future<Output = Result<crate::models::SmbLogLevel, Error>>>;
@@ -640,6 +645,7 @@ pub trait ProtocolsApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApiClient<C> {
     fn create_hdfs_proxyuser(
         &self,
@@ -1216,7 +1222,10 @@ impl<C: hyper::client::connect::Connect + 'static> ProtocolsApi for ProtocolsApi
         )
     }
 
-    fn delete_ntp_server(&self, ntp_server_id: &str) -> Box<dyn Future<Output = Result<(), Error>>> {
+    fn delete_ntp_server(
+        &self,
+        ntp_server_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>> {
         let uri_str = format!(
             "{}/platform/3/protocols/ntp/servers/{NtpServerId}",
             self.configuration.base_path,

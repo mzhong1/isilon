@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct AuthApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AuthApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AuthApiClient<C> {
         AuthApiClient {
@@ -217,7 +217,8 @@ pub trait AuthApi {
         auth_role_id: &str,
         resolve_names: bool,
     ) -> Box<dyn Future<Output = Result<crate::models::AuthRoles, Error>>>;
-    fn get_auth_shells(&self) -> Box<dyn Future<Output = Result<crate::models::AuthShells, Error>>>;
+    fn get_auth_shells(&self)
+        -> Box<dyn Future<Output = Result<crate::models::AuthShells, Error>>>;
     fn get_auth_user(
         &self,
         auth_user_id: &str,
@@ -478,6 +479,7 @@ pub trait AuthApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> {
     fn create_auth_cache_item(
         &self,
@@ -1214,7 +1216,9 @@ impl<C: hyper::client::connect::Connect + 'static> AuthApi for AuthApiClient<C> 
         )
     }
 
-    fn get_auth_shells(&self) -> Box<dyn Future<Output = Result<crate::models::AuthShells, Error>>> {
+    fn get_auth_shells(
+        &self,
+    ) -> Box<dyn Future<Output = Result<crate::models::AuthShells, Error>>> {
         let uri_str = format!("{}/platform/1/auth/shells", self.configuration.base_path);
         query(
             self.configuration.borrow(),

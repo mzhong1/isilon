@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct SyncApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> SyncApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> SyncApiClient<C> {
         SyncApiClient {
@@ -160,7 +160,7 @@ pub trait SyncApi {
         limit: i32,
         scope: &str,
         dir: &str,
-    ) -> Box<dyn Future<Output = Result< crate::models::SyncPoliciesExtended, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncPoliciesExtended, Error>>>;
     fn list_sync_reports_rotate(
         &self,
     ) -> Box<dyn Future<Output = Result<crate::models::SyncReportsRotate, Error>>>;
@@ -192,7 +192,7 @@ pub trait SyncApi {
         sync_settings: crate::models::SyncSettingsExtended,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> {
     fn create_sync_job(
         &self,
@@ -685,7 +685,7 @@ impl<C: hyper::client::connect::Connect + 'static> SyncApi for SyncApiClient<C> 
         limit: i32,
         scope: &str,
         dir: &str,
-    ) -> Box<dyn Future<Output = Result< crate::models::SyncPoliciesExtended, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::SyncPoliciesExtended, Error>>> {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())

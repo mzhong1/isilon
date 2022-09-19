@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct UpgradeApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> UpgradeApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> UpgradeApiClient<C> {
         UpgradeApiClient {
@@ -33,31 +33,31 @@ pub trait UpgradeApi {
     fn create_cluster_add_remaining_node(
         &self,
         cluster_add_remaining_node: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_archive_item(
         &self,
         cluster_archive_item: crate::models::ClusterArchiveItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_assess_item(
         &self,
         cluster_assess_item: crate::models::ClusterAssessItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_commit_item(
         &self,
         cluster_commit_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_firmware_assess_item(
         &self,
         cluster_firmware_assess_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_firmware_upgrade_item(
         &self,
         cluster_firmware_upgrade_item: crate::models::ClusterFirmwareUpgradeItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_patch_abort_item(
         &self,
         cluster_patch_abort_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_patch_patch(
         &self,
         cluster_patch_patch: crate::models::ClusterPatchPatch,
@@ -67,15 +67,15 @@ pub trait UpgradeApi {
     fn create_cluster_retry_last_action_item(
         &self,
         cluster_retry_last_action_item: crate::models::ClusterRetryLastActionItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_rollback_item(
         &self,
         cluster_rollback_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_cluster_upgrade_item(
         &self,
         cluster_upgrade_item: crate::models::ClusterUpgradeItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>>;
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>>;
     fn create_hardware_start_item(
         &self,
         hardware_start_item: crate::models::HardwareStartItem,
@@ -131,12 +131,12 @@ pub trait UpgradeApi {
         cluster_upgrade: crate::models::ClusterUpgrade,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClient<C> {
     fn create_cluster_add_remaining_node(
         &self,
         cluster_add_remaining_node: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/add_remaining_nodes",
             self.configuration.base_path
@@ -152,7 +152,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_archive_item(
         &self,
         cluster_archive_item: crate::models::ClusterArchiveItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/archive",
             self.configuration.base_path
@@ -168,7 +168,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_assess_item(
         &self,
         cluster_assess_item: crate::models::ClusterAssessItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/5/upgrade/cluster/assess",
             self.configuration.base_path
@@ -184,7 +184,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_commit_item(
         &self,
         cluster_commit_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/commit",
             self.configuration.base_path
@@ -200,7 +200,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_firmware_assess_item(
         &self,
         cluster_firmware_assess_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/firmware/assess",
             self.configuration.base_path
@@ -216,7 +216,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_firmware_upgrade_item(
         &self,
         cluster_firmware_upgrade_item: crate::models::ClusterFirmwareUpgradeItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/firmware/upgrade",
             self.configuration.base_path
@@ -232,7 +232,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_patch_abort_item(
         &self,
         cluster_patch_abort_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/patch/abort",
             self.configuration.base_path
@@ -270,7 +270,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_retry_last_action_item(
         &self,
         cluster_retry_last_action_item: crate::models::ClusterRetryLastActionItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/retry_last_action",
             self.configuration.base_path
@@ -286,7 +286,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_rollback_item(
         &self,
         cluster_rollback_item: crate::models::Empty,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/3/upgrade/cluster/rollback",
             self.configuration.base_path
@@ -302,7 +302,7 @@ impl<C: hyper::client::connect::Connect + 'static> UpgradeApi for UpgradeApiClie
     fn create_cluster_upgrade_item(
         &self,
         cluster_upgrade_item: crate::models::ClusterUpgradeItem,
-    ) -> Box<dyn Future<Output = Result< crate::models::Empty, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::Empty, Error>>> {
         let uri_str = format!(
             "{}/platform/5/upgrade/cluster/upgrade",
             self.configuration.base_path

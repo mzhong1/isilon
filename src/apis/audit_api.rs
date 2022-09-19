@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct AuditApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AuditApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AuditApiClient<C> {
         AuditApiClient {
@@ -34,8 +34,10 @@ pub trait AuditApi {
         &self,
         audit_topic: crate::models::AuditTopicCreateParams,
     ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
-    fn delete_audit_topic(&self, audit_topic_id: &str)
-        -> Box<dyn Future<Output = Result<(), Error>>>;
+    fn delete_audit_topic(
+        &self,
+        audit_topic_id: &str,
+    ) -> Box<dyn Future<Output = Result<(), Error>>>;
     fn get_audit_progress(
         &self,
         lnn: i32,
@@ -73,6 +75,7 @@ pub trait AuditApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AuditApi for AuditApiClient<C> {
     fn create_audit_topic(
         &self,

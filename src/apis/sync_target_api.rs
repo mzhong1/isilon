@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct SyncTargetApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> SyncTargetApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> SyncTargetApiClient<C> {
         SyncTargetApiClient {
@@ -51,7 +51,7 @@ pub trait SyncTargetApi {
         dir: &str,
     ) -> Box<dyn Future<Output = Result<crate::models::ReportsReportSubreportsExtended, Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> SyncTargetApi for SyncTargetApiClient<C> {
     fn create_policies_policy_cancel_item(
         &self,
@@ -99,7 +99,8 @@ impl<C: hyper::client::connect::Connect + 'static> SyncTargetApi for SyncTargetA
         state: &str,
         limit: i32,
         dir: &str,
-    ) -> Box<dyn Future<Output = Result<crate::models::ReportsReportSubreportsExtended, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::ReportsReportSubreportsExtended, Error>>>
+    {
         let q = ::url::form_urlencoded::Serializer::new(String::new())
             .append_pair("sort", &sort.to_string())
             .append_pair("resume", &resume.to_string())

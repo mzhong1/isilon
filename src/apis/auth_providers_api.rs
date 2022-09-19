@@ -15,11 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct AuthProvidersApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AuthProvidersApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AuthProvidersApiClient<C> {
         AuthProvidersApiClient {
@@ -59,6 +60,7 @@ pub trait AuthProvidersApi {
     ) -> Box<dyn Future<Output = Result<crate::models::AdsProviderSearch, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AuthProvidersApi for AuthProvidersApiClient<C> {
     fn get_ads_provider_controllers(
         &self,

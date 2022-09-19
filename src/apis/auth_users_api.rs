@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct AuthUsersApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AuthUsersApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AuthUsersApiClient<C> {
         AuthUsersApiClient {
@@ -59,6 +59,7 @@ pub trait AuthUsersApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AuthUsersApi for AuthUsersApiClient<C> {
     fn create_user_member_of_item(
         &self,

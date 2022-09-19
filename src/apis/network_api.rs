@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct NetworkApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> NetworkApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> NetworkApiClient<C> {
         NetworkApiClient {
@@ -117,6 +117,7 @@ pub trait NetworkApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> NetworkApi for NetworkApiClient<C> {
     fn create_dnscache_flush_item(
         &self,

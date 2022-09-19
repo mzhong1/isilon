@@ -1,6 +1,7 @@
 use cookie;
 use futures::{Future, Stream};
-use hyper::{self, header::HeaderName, header::HeaderValue, Request};
+#[cfg(feature = "client")]
+use hyper::{self, client::connect::Connect, header::HeaderName, header::HeaderValue, Request};
 use reqwest;
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json;
@@ -90,109 +91,108 @@ impl From<serde_json::Error> for Error {
 }
 
 mod antivirus_api;
-pub use self::antivirus_api::{AntivirusApi, AntivirusApiClient};
+pub use self::antivirus_api::AntivirusApi;
 mod audit_api;
-pub use self::audit_api::{AuditApi, AuditApiClient};
+pub use self::audit_api::AuditApi;
 mod auth_api;
-pub use self::auth_api::{AuthApi, AuthApiClient};
+pub use self::auth_api::AuthApi;
 mod auth_groups_api;
-pub use self::auth_groups_api::{AuthGroupsApi, AuthGroupsApiClient};
+pub use self::auth_groups_api::AuthGroupsApi;
 mod auth_providers_api;
-pub use self::auth_providers_api::{AuthProvidersApi, AuthProvidersApiClient};
+pub use self::auth_providers_api::AuthProvidersApi;
 mod auth_roles_api;
-pub use self::auth_roles_api::{AuthRolesApi, AuthRolesApiClient};
+pub use self::auth_roles_api::AuthRolesApi;
 mod auth_users_api;
-pub use self::auth_users_api::{AuthUsersApi, AuthUsersApiClient};
+pub use self::auth_users_api::AuthUsersApi;
 mod certificate_api;
-pub use self::certificate_api::{CertificateApi, CertificateApiClient};
+pub use self::certificate_api::CertificateApi;
 mod cloud_api;
-pub use self::cloud_api::{CloudApi, CloudApiClient};
+pub use self::cloud_api::CloudApi;
 mod cluster_api;
-pub use self::cluster_api::{ClusterApi, ClusterApiClient};
+pub use self::cluster_api::ClusterApi;
 mod cluster_nodes_api;
-pub use self::cluster_nodes_api::{ClusterNodesApi, ClusterNodesApiClient};
+pub use self::cluster_nodes_api::ClusterNodesApi;
 mod debug_api;
-pub use self::debug_api::{DebugApi, DebugApiClient};
+pub use self::debug_api::DebugApi;
 mod dedupe_api;
-pub use self::dedupe_api::{DedupeApi, DedupeApiClient};
+pub use self::dedupe_api::DedupeApi;
 mod event_api;
-pub use self::event_api::{EventApi, EventApiClient};
+pub use self::event_api::EventApi;
 mod file_filter_api;
-pub use self::file_filter_api::{FileFilterApi, FileFilterApiClient};
+pub use self::file_filter_api::FileFilterApi;
 mod filepool_api;
-pub use self::filepool_api::{FilepoolApi, FilepoolApiClient};
+pub use self::filepool_api::FilepoolApi;
 mod filesystem_api;
-pub use self::filesystem_api::{FilesystemApi, FilesystemApiClient};
+pub use self::filesystem_api::FilesystemApi;
 mod fsa_api;
-pub use self::fsa_api::{FsaApi, FsaApiClient};
+pub use self::fsa_api::FsaApi;
 mod fsa_results_api;
-pub use self::fsa_results_api::{FsaResultsApi, FsaResultsApiClient};
+pub use self::fsa_results_api::FsaResultsApi;
 mod hardening_api;
-pub use self::hardening_api::{HardeningApi, HardeningApiClient};
+pub use self::hardening_api::HardeningApi;
 mod hardware_api;
-pub use self::hardware_api::{HardwareApi, HardwareApiClient};
+pub use self::hardware_api::HardwareApi;
 mod id_resolution_api;
-pub use self::id_resolution_api::{IdResolutionApi, IdResolutionApiClient};
+pub use self::id_resolution_api::IdResolutionApi;
 mod job_api;
-pub use self::job_api::{JobApi, JobApiClient};
+pub use self::job_api::JobApi;
 mod license_api;
-pub use self::license_api::{LicenseApi, LicenseApiClient};
+pub use self::license_api::LicenseApi;
 mod local_api;
-pub use self::local_api::{LocalApi, LocalApiClient};
+pub use self::local_api::LocalApi;
 mod namespace_api;
-pub use self::namespace_api::{NamespaceApi, NamespaceApiClient};
+pub use self::namespace_api::NamespaceApi;
 mod network_api;
-pub use self::network_api::{NetworkApi, NetworkApiClient};
+pub use self::network_api::NetworkApi;
 mod network_groupnets_api;
-pub use self::network_groupnets_api::{NetworkGroupnetsApi, NetworkGroupnetsApiClient};
+pub use self::network_groupnets_api::NetworkGroupnetsApi;
 mod network_groupnets_subnets_api;
-pub use self::network_groupnets_subnets_api::{
-    NetworkGroupnetsSubnetsApi, NetworkGroupnetsSubnetsApiClient,
-};
+pub use self::network_groupnets_subnets_api::NetworkGroupnetsSubnetsApi;
 mod protocols_api;
-pub use self::protocols_api::{ProtocolsApi, ProtocolsApiClient};
+pub use self::protocols_api::ProtocolsApi;
 mod protocols_hdfs_api;
-pub use self::protocols_hdfs_api::{ProtocolsHdfsApi, ProtocolsHdfsApiClient};
+pub use self::protocols_hdfs_api::ProtocolsHdfsApi;
 mod quota_api;
-pub use self::quota_api::{QuotaApi, QuotaApiClient};
+pub use self::quota_api::QuotaApi;
 mod quota_quotas_api;
-pub use self::quota_quotas_api::{QuotaQuotasApi, QuotaQuotasApiClient};
+pub use self::quota_quotas_api::QuotaQuotasApi;
 mod quota_reports_api;
-pub use self::quota_reports_api::{QuotaReportsApi, QuotaReportsApiClient};
+pub use self::quota_reports_api::QuotaReportsApi;
 mod remotesupport_api;
-pub use self::remotesupport_api::{RemotesupportApi, RemotesupportApiClient};
+pub use self::remotesupport_api::RemotesupportApi;
 mod snapshot_api;
-pub use self::snapshot_api::{SnapshotApi, SnapshotApiClient};
+pub use self::snapshot_api::SnapshotApi;
 mod snapshot_changelists_api;
-pub use self::snapshot_changelists_api::{SnapshotChangelistsApi, SnapshotChangelistsApiClient};
+pub use self::snapshot_changelists_api::SnapshotChangelistsApi;
 mod snapshot_snapshots_api;
-pub use self::snapshot_snapshots_api::{SnapshotSnapshotsApi, SnapshotSnapshotsApiClient};
+pub use self::snapshot_snapshots_api::SnapshotSnapshotsApi;
 mod statistics_api;
-pub use self::statistics_api::{StatisticsApi, StatisticsApiClient};
+pub use self::statistics_api::StatisticsApi;
 mod storagepool_api;
-pub use self::storagepool_api::{StoragepoolApi, StoragepoolApiClient};
+pub use self::storagepool_api::StoragepoolApi;
 mod sync_api;
-pub use self::sync_api::{SyncApi, SyncApiClient};
+pub use self::sync_api::SyncApi;
 mod sync_policies_api;
-pub use self::sync_policies_api::{SyncPoliciesApi, SyncPoliciesApiClient};
+pub use self::sync_policies_api::SyncPoliciesApi;
 mod sync_reports_api;
-pub use self::sync_reports_api::{SyncReportsApi, SyncReportsApiClient};
+pub use self::sync_reports_api::SyncReportsApi;
 mod sync_target_api;
-pub use self::sync_target_api::{SyncTargetApi, SyncTargetApiClient};
+pub use self::sync_target_api::SyncTargetApi;
 mod upgrade_api;
-pub use self::upgrade_api::{UpgradeApi, UpgradeApiClient};
+pub use self::upgrade_api::UpgradeApi;
 mod upgrade_cluster_api;
-pub use self::upgrade_cluster_api::{UpgradeClusterApi, UpgradeClusterApiClient};
+pub use self::upgrade_cluster_api::UpgradeClusterApi;
 mod worm_api;
-pub use self::worm_api::{WormApi, WormApiClient};
+pub use self::worm_api::WormApi;
 mod zones_api;
-pub use self::zones_api::{ZonesApi, ZonesApiClient};
+pub use self::zones_api::ZonesApi;
 mod zones_summary_api;
-pub use self::zones_summary_api::{ZonesSummaryApi, ZonesSummaryApiClient};
+pub use self::zones_summary_api::ZonesSummaryApi;
 
 pub mod client;
 pub mod configuration;
 
+#[cfg(feature = "client")]
 fn query<T, R, C: hyper::client::connect::Connect + 'static>(
     config: &configuration::Configuration<C>,
     url: &str,
@@ -205,12 +205,12 @@ where
 {
     let serialized = serde_json::to_string(&body).unwrap();
     let body = hyper::Body::from(serialized);
-    let mut req = Request::builder()
+    let mut req = hyper::Request::builder()
         .method(method)
         .uri(url)
         .header(
             hyper::header::CONTENT_TYPE,
-            HeaderValue::from_static("Application/json"),
+            hyper::header::HeaderValue::from_static("Application/json"),
         )
         .body(body)
         .unwrap();
@@ -230,6 +230,7 @@ where
     )
 }
 
+#[cfg(feature = "client")]
 fn put<T, C: hyper::client::connect::Connect + 'static>(
     config: &configuration::Configuration<C>,
     url: &str,
@@ -240,12 +241,12 @@ where
 {
     let serialized = serde_json::to_string(&body).unwrap();
     let body = hyper::Body::from(serialized);
-    let mut req = Request::builder()
+    let mut req = hyper::Request::builder()
         .method(hyper::Method::PUT)
         .uri(url)
         .header(
             hyper::header::CONTENT_TYPE,
-            HeaderValue::from_static("Application/json"),
+            hyper::header::HeaderValue::from_static("Application/json"),
         )
         .body(body)
         .unwrap();
@@ -261,6 +262,7 @@ where
     )
 }
 
+#[cfg(feature = "client")]
 fn custom_query<T, R, C: hyper::client::connect::Connect + 'static>(
     config: &configuration::Configuration<C>,
     url: &str,
@@ -274,17 +276,17 @@ where
 {
     let serialized = serde_json::to_string(&body).unwrap();
     let body = hyper::Body::from(serialized.clone());
-    let mut req = Request::builder();
+    let mut req = hyper::Request::builder();
     req.method(method);
     req.uri(url);
     req.header(
         hyper::header::CONTENT_TYPE,
-        HeaderValue::from_static("Application/json"),
+        hyper::header::HeaderValue::from_static("Application/json"),
     );
     for (key, value) in headers {
         req.header(
-            HeaderName::from_bytes(&key.as_bytes()).unwrap(),
-            HeaderValue::from_str(&value).unwrap(),
+            hyper::header::HeaderName::from_bytes(&key.as_bytes()).unwrap(),
+            hyper::header::HeaderValue::from_str(&value).unwrap(),
         );
     }
 

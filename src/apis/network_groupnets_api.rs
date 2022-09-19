@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct NetworkGroupnetsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> NetworkGroupnetsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> NetworkGroupnetsApiClient<C> {
         NetworkGroupnetsApiClient {
@@ -101,6 +101,7 @@ pub trait NetworkGroupnetsApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> NetworkGroupnetsApi
     for NetworkGroupnetsApiClient<C>
 {

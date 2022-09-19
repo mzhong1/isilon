@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct FsaResultsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> FsaResultsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> FsaResultsApiClient<C> {
         FsaResultsApiClient {
@@ -121,6 +121,7 @@ pub trait FsaResultsApi {
     ) -> Box<dyn Future<Output = Result<crate::models::ResultTopFiles, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> FsaResultsApi for FsaResultsApiClient<C> {
     fn get_histogram_stat_by(
         &self,

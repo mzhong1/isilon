@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct AntivirusApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> AntivirusApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> AntivirusApiClient<C> {
         AntivirusApiClient {
@@ -134,6 +134,7 @@ pub trait AntivirusApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApiClient<C> {
     fn create_antivirus_policy(
         &self,
@@ -154,7 +155,8 @@ impl<C: hyper::client::connect::Connect + 'static> AntivirusApi for AntivirusApi
     fn create_antivirus_scan_item(
         &self,
         antivirus_scan_item: crate::models::AntivirusScanItem,
-    ) -> Box<dyn Future<Output = Result<crate::models::CreateAntivirusScanItemResponse, Error>>> {
+    ) -> Box<dyn Future<Output = Result<crate::models::CreateAntivirusScanItemResponse, Error>>>
+    {
         let uri_str = format!("{}/platform/3/antivirus/scan", self.configuration.base_path);
         query(
             self.configuration.borrow(),

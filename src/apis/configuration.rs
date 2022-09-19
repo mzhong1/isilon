@@ -11,15 +11,16 @@
 use base64::encode;
 use cookie::{Cookie, CookieJar};
 use futures;
-use futures::{Future, IntoFuture};
+use futures::Future;
 use hyper;
 use hyper::header::{HeaderName, HeaderValue};
 use reqwest;
 
-use super::{custom_query, Error};
+use super::Error;
 use std::collections::HashMap;
 use std::io::Read;
 
+#[cfg(feature = "client")]
 pub struct Configuration<C: hyper::client::connect::Connect> {
     pub base_path: String,
     pub client: hyper::client::Client<C>,
@@ -33,6 +34,7 @@ pub struct Configuration<C: hyper::client::connect::Connect> {
     ssl_cert: Option<::std::path::PathBuf>,
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> Configuration<C> {
     /// The Isilon docs say basic authorization is slow and resource intensive.  
     /// The default here is to use session tokens but you can fall back on basic

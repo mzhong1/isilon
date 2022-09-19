@@ -15,12 +15,13 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct ZonesApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> ZonesApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> ZonesApiClient<C> {
         ZonesApiClient {
@@ -35,8 +36,10 @@ pub trait ZonesApi {
         zone: crate::models::ZoneCreateParams,
     ) -> Box<dyn Future<Output = Result<crate::models::CreateResponse, Error>>>;
     fn delete_zone(&self, zone_id: i32) -> Box<dyn Future<Output = Result<(), Error>>>;
-    fn get_zone(&self, zone_id: i32)
-        -> Box<dyn Future<Output = Result<crate::models::Zones, Error>>>;
+    fn get_zone(
+        &self,
+        zone_id: i32,
+    ) -> Box<dyn Future<Output = Result<crate::models::Zones, Error>>>;
     fn list_zones(&self) -> Box<dyn Future<Output = Result<crate::models::ZonesExtended, Error>>>;
     fn update_zone(
         &self,
@@ -44,7 +47,7 @@ pub trait ZonesApi {
         zone_id: i32,
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> ZonesApi for ZonesApiClient<C> {
     fn create_zone(
         &self,

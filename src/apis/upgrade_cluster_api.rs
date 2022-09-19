@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct UpgradeClusterApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> UpgradeClusterApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> UpgradeClusterApiClient<C> {
         UpgradeClusterApiClient {
@@ -43,6 +43,7 @@ pub trait UpgradeClusterApi {
     ) -> Box<dyn Future<Output = Result<crate::models::NodesNodeFirmwareStatus, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> UpgradeClusterApi
     for UpgradeClusterApiClient<C>
 {

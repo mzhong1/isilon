@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct HardeningApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> HardeningApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> HardeningApiClient<C> {
         HardeningApiClient {
@@ -52,6 +52,7 @@ pub trait HardeningApi {
     ) -> Box<dyn Future<Output = Result<crate::models::HardeningStatus, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> HardeningApi for HardeningApiClient<C> {
     fn create_hardening_apply_item(
         &self,

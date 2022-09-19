@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct QuotaReportsApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> QuotaReportsApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> QuotaReportsApiClient<C> {
         QuotaReportsApiClient {
@@ -35,7 +35,7 @@ pub trait QuotaReportsApi {
         rid: &str,
     ) -> Box<dyn Future<Output = Result<crate::models::ReportAbout, Error>>>;
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> QuotaReportsApi for QuotaReportsApiClient<C> {
     fn get_report_about(
         &self,

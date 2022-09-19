@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct LocalApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> LocalApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> LocalApiClient<C> {
         LocalApiClient {
@@ -35,6 +35,7 @@ pub trait LocalApi {
     ) -> Box<dyn Future<Output = Result<crate::models::ClusterTimeExtendedExtended, Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> LocalApi for LocalApiClient<C> {
     fn get_cluster_time(
         &self,

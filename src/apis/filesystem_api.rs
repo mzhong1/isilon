@@ -15,12 +15,12 @@ use futures;
 use futures::Future;
 use hyper;
 
-use super::{configuration, put, query, Error};
-
+use super::{configuration, Error};
+#[cfg(feature = "client")]
 pub struct FilesystemApiClient<C: hyper::client::connect::Connect> {
     configuration: Rc<configuration::Configuration<C>>,
 }
-
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect> FilesystemApiClient<C> {
     pub fn new(configuration: Rc<configuration::Configuration<C>>) -> FilesystemApiClient<C> {
         FilesystemApiClient {
@@ -46,6 +46,7 @@ pub trait FilesystemApi {
     ) -> Box<dyn Future<Output = Result<(), Error>>>;
 }
 
+#[cfg(feature = "client")]
 impl<C: hyper::client::connect::Connect + 'static> FilesystemApi for FilesystemApiClient<C> {
     fn get_settings_access_time(
         &self,
