@@ -1,6 +1,6 @@
 use cookie;
-use futures::{Future, Stream};
-#[cfg(feature = "client")]
+use futures::{future::Future, future::IntoFuture, TryFuture, TryFutureExt, Stream, StreamExt};
+
 use hyper::{self, client::connect::Connect, header::HeaderName, header::HeaderValue, Request};
 use reqwest;
 use serde::{de::DeserializeOwned, Serialize};
@@ -192,8 +192,8 @@ pub use self::zones_summary_api::ZonesSummaryApi;
 pub mod client;
 pub mod configuration;
 
-#[cfg(feature = "client")]
-fn query<T, R, C: hyper::client::connect::Connect + 'static>(
+
+async fn query<T, R, C: hyper::client::connect::Connect + 'static + std::marker::Send + Sync + Clone>(
     config: &configuration::Configuration<C>,
     url: &str,
     body: &T,
@@ -220,7 +220,7 @@ where
         config
             .client
             .request(req)
-            .and_then(|res| res.into_body().concat2())
+            .and_then(|res| res.into_body().concat())
             .map_err(|e| Error::from(e))
             .and_then(|ref body| {
                 let parsed: Result<R, _> = serde_json::from_slice(&body);
@@ -230,8 +230,8 @@ where
     )
 }
 
-#[cfg(feature = "client")]
-fn put<T, C: hyper::client::connect::Connect + 'static>(
+
+fn put<T, C: hyper::client::connect::Connect + 'static + std::marker::Send + Sync + Clone>(
     config: &configuration::Configuration<C>,
     url: &str,
     body: &T,
@@ -256,14 +256,14 @@ where
         config
             .client
             .request(req)
-            .and_then(|res| res.into_body().concat2())
+            .and_then(|res| res.into_body().concat())
             .map_err(|e| Error::from(e))
             .and_then(|_| futures::future::ok(())),
     )
 }
 
-#[cfg(feature = "client")]
-fn custom_query<T, R, C: hyper::client::connect::Connect + 'static>(
+
+fn custom_query<T, R, C: hyper::client::connect::Connect + 'static + std::marker::Send + Sync + Clone>(
     config: &configuration::Configuration<C>,
     url: &str,
     body: &T,
@@ -292,14 +292,18 @@ where
 
     let mut req = req.body(body).unwrap();
     config.set_session(&mut req).unwrap();
+    
+    //new Client request code
+    //let res = config.client.request(req).await?;
+    //hyper::body::to_bytes(res).await?
 
     Box::new(
         config
             .client
             .request(req)
-            .and_then(|res| res.into_body().concat2())
+            .and_then(|res| res.into_body().concat())
             .map_err(|e| Error::from(e))
-            .and_then(|ref body| {
+            .and_then(|&body| {
                 let parsed: Result<R, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
